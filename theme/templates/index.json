@@ -1,0 +1,52 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "p1": { "type": "proof", "settings": { "text": "Grown by 40 farms in Java & Bali" } },
+        "p2": { "type": "proof", "settings": { "text": "Third-party tested for heavy metals" } },
+        "p3": { "type": "proof", "settings": { "text": "Ships to 30+ countries" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": { "image": "shopify://shop_images/hero-racik.png", "primary_link": "/pages/quiz", "secondary_link": "/pages/build-a-pack" }
+    },
+    "shelf": { "type": "shelf", "settings": { "collection": "tonics", "limit": 6, "columns": "3" } },
+    "quiz": { "type": "quiz-band", "settings": { "link": "/pages/quiz" } },
+    "steps": {
+      "type": "steps",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Pick your tonics", "text": "Take the quiz or build a pack of three or more. Bigger packs cost less per stick." } },
+        "s2": { "type": "step", "settings": { "title": "One stick a day", "text": "Stir into 250 ml of water, hot or iced. A 30-stick pouch lasts a month." } },
+        "s3": { "type": "step", "settings": { "title": "Change it anytime", "text": "Skip a delivery, swap a flavour or pause from your account. Cancel in two clicks." } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {}
+    },
+    "ingredients": { "type": "ingredients", "settings": {} },
+    "compare": {
+      "type": "compare",
+      "blocks": {
+        "r1": { "type": "row", "settings": { "feature": "Price per stick", "one_time": "$1.13", "subscription": "$0.96" } },
+        "r2": { "type": "row", "settings": { "feature": "Pack of 5 or more", "one_time": "15% off", "subscription": "15% off, on top" } },
+        "r3": { "type": "row", "settings": { "feature": "Shipping", "one_time": "Free over $50", "subscription": "Always free in the US" } },
+        "r4": { "type": "row", "settings": { "feature": "Skip, swap or pause", "one_time": "—", "subscription": "Anytime, from your account" } },
+        "r5": { "type": "row", "settings": { "feature": "Seasonal blends", "one_time": "When in stock", "subscription": "First access" } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4", "r5"],
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "q": "What is jamu?", "a": "<p>Jamu is Indonesia's herbal drink tradition, made from roots, barks and leaves like turmeric and ginger. Recipes are passed down in families and sold fresh by street vendors, the <em>mbok jamu</em>, across Java.</p>" } },
+        "q2": { "type": "qa", "settings": { "q": "How do I take it?", "a": "<p>Stir one stick into 250 ml of water, hot or cold. It dissolves in about ten seconds. Most people take it in the morning.</p>" } },
+        "q3": { "type": "qa", "settings": { "q": "Do you ship to my country?", "a": "<p>We ship to the US, Canada, the UK, the EU and Australia. Prices show in your currency, and duties are paid at checkout, so there's nothing extra to pay on delivery.</p>" } },
+        "q4": { "type": "qa", "settings": { "q": "Can I pause or cancel my subscription?", "a": "<p>Yes. Skip, swap, pause or cancel from your account page at any time. There's no minimum number of deliveries.</p>" } },
+        "q5": { "type": "qa", "settings": { "q": "Is it safe during pregnancy?", "a": "<p>Some traditional ingredients are not recommended during pregnancy. Please check with your doctor before taking any herbal supplement.</p>" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5"],
+      "settings": {}
+    }
+  },
+  "order": ["hero", "shelf", "quiz", "steps", "ingredients", "compare", "faq"]
+}

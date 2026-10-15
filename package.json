@@ -1,0 +1,22 @@
+{
+  "name": "racik-shopify",
+  "version": "1.0.0",
+  "description": "Shopify theme + Function for a subscription herbal tonic brand",
+  "scripts": {
+    "theme:dev": "shopify theme dev --path theme",
+    "theme:check": "shopify theme check --path theme",
+    "preview": "node preview/server.mjs",
+    "e2e": "node preview/e2e.mjs",
+    "images": "node design/build.mjs",
+    "seed": "node scripts/seed.js",
+    "test": "node --test \"scripts/test/*.test.js\" \"extensions/pack-discount/test/*.test.js\""
+  },
+  "type": "module",
+  "devDependencies": {
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@shopify/cli": "^4.9.4",
+    "liquidjs": "^10.30.0",
+    "puppeteer-core": "^25.14.0"
+  },
+  "private": true
+}

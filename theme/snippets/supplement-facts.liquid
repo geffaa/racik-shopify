@@ -1,0 +1,30 @@
+{%- comment -%}
+  FDA-style Supplement Facts panel from the racik.supplement_facts JSON
+  metafield: { serving_size, servings, rows: [{ name, amount, dv, indent }], blend: { name, amount, items }, footnotes }
+{%- endcomment -%}
+{%- assign f = product.metafields.racik.supplement_facts.value -%}
+{%- if f -%}
+  <figure class="facts" aria-label="{{ 'products.facts_title' | t }}">
+    <p class="facts__title">{{ 'products.facts_title' | t }}</p>
+    <p class="facts__serving">{{ 'products.facts_serving' | t: size: f.serving_size }}<br>{{ 'products.facts_servings' | t: count: f.servings }}</p>
+    <table class="facts__table">
+      <thead>
+        <tr><th scope="col"><span class="visually-hidden">{{ 'products.facts_nutrient' | t }}</span></th><th scope="col">{{ 'products.facts_amount' | t }}</th><th scope="col">{{ 'products.facts_dv' | t }}</th></tr>
+      </thead>
+      <tbody>
+        {%- for row in f.rows -%}
+          <tr{% if row.indent %} class="indent"{% endif %}>
+            <th scope="row">{{ row.name }}</th><td>{{ row.amount }}</td><td>{{ row.dv | default: '†' }}</td>
+          </tr>
+        {%- endfor -%}
+        {%- if f.blend -%}
+          <tr class="facts__blend"><th scope="row">{{ f.blend.name }}</th><td>{{ f.blend.amount }}</td><td>†</td></tr>
+          <tr class="facts__items"><td colspan="3">{{ f.blend.items | join: ', ' }}</td></tr>
+        {%- endif -%}
+      </tbody>
+    </table>
+    <figcaption class="facts__foot">
+      {%- for note in f.footnotes -%}<span>{{ note }}</span>{%- endfor -%}
+    </figcaption>
+  </figure>
+{%- endif -%}

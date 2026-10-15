@@ -1,0 +1,47 @@
+<section class="container section--tight">
+  <div class="band tone" style="--tone: {{ section.settings.tone }}; --on-tone: {{ section.settings.on_tone }}">
+    <div class="stack" style="--gap:18px">
+      <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      <h2 class="d-1">{{ section.settings.heading | escape }}</h2>
+      <p class="lead">{{ section.settings.text | escape }}</p>
+      <a href="{{ section.settings.link }}" class="btn btn--light" style="justify-self:start">{{ section.settings.button | escape }} {% render 'icon', name: 'arrow' %}</a>
+    </div>
+    <ul role="list" class="band__chips" aria-hidden="true">
+      {%- assign chips = section.settings.chips | split: ',' -%}
+      {%- for chip in chips -%}<li style="--i: {{ forloop.index0 }}">{{ chip | strip }}</li>{%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .band { display: grid; gap: 32px; padding: clamp(28px, 5vw, 72px); border-radius: var(--r-lg); overflow: hidden; }
+  .band__chips { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; align-content: center; }
+  .band__chips li {
+    padding: 12px 20px;
+    border-radius: var(--pill);
+    background: rgba(255, 255, 255, 0.14);
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    font-weight: 600;
+    transform: rotate(calc((var(--i) - 3) * 1.6deg));
+  }
+  .band__chips li:nth-child(3n) { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  @media (min-width: 1000px) { .band { grid-template-columns: 1.2fr 1fr; align-items: center; } }
+</style>
+
+{% schema %}
+{
+  "name": "Quiz band",
+  "tag": "div",
+  "settings": [
+    { "type": "color", "id": "tone", "label": "Background", "default": "#3D4FA3" },
+    { "type": "color", "id": "on_tone", "label": "Foreground", "default": "#FFFFFF" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Ritual finder" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Not sure where to start?" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Four questions, about a minute. We'll suggest three tonics and build the pack for you." },
+    { "type": "text", "id": "button", "label": "Button", "default": "Take the quiz" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "text", "id": "chips", "label": "Example answers (comma separated)", "default": "More energy, Better sleep, Easier digestion, Hot drinks, Bright & citrusy, Mornings, Caffeine-free, Calmer afternoons" }
+  ],
+  "presets": [{ "name": "Quiz band" }]
+}
+{% endschema %}

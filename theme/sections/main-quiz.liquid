@@ -1,0 +1,128 @@
+{%- comment -%}
+  Ritual finder. Questions and answers are blocks, so merchandising edits
+  them in the theme editor. Each answer carries tags; products score one
+  point per matching product tag (e.g. goal:energy, time:morning), and the
+  top three become a ready-made pack.
+{%- endcomment -%}
+{{ 'quiz.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'quiz.js' | asset_url }}" type="module"></script>
+
+<ritual-quiz class="quiz container" data-pack-url="{{ section.settings.pack_page.url }}">
+  <div class="quiz__top">
+    <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    <div class="quiz__progress" aria-hidden="true"><span data-progress></span></div>
+    <p class="small muted" data-step-label aria-live="polite"></p>
+  </div>
+
+  <div class="quiz__intro" data-screen="intro">
+    <h1 class="d-hero">{{ section.settings.heading | escape }}</h1>
+    <p class="lead muted">{{ section.settings.text | escape }}</p>
+    <button type="button" class="btn" data-start>{{ 'quiz.start' | t }} {% render 'icon', name: 'arrow' %}</button>
+    <noscript><a class="link" href="{{ section.settings.collection.url }}">{{ 'quiz.no_js' | t }}</a></noscript>
+  </div>
+
+  {%- for block in section.blocks -%}
+    {%- assign answers = block.settings.answers | newline_to_br | split: '<br />' -%}
+    {%- assign q_index = forloop.index -%}
+    <fieldset class="quiz__q" data-screen="q" data-multi="{{ block.settings.multi }}" hidden {{ block.shopify_attributes }}>
+      <legend class="d-1">{{ block.settings.question | escape }}</legend>
+      {%- if block.settings.help != blank -%}<p class="muted">{{ block.settings.help | escape }}</p>{%- endif -%}
+      <div class="quiz__answers">
+        {%- for raw in answers -%}
+          {%- assign parts = raw | split: '|' -%}
+          {%- assign label = parts[0] | strip -%}
+          {%- if label != blank -%}
+            <label class="answer">
+              <input type="{% if block.settings.multi %}checkbox{% else %}radio{% endif %}" name="q{{ q_index }}" value="{{ parts[1] | strip | escape }}" data-label="{{ label | escape }}">
+              <span class="answer__box"><span class="answer__tick" aria-hidden="true">{% render 'icon', name: 'check' %}</span>{{ label | escape }}</span>
+            </label>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class="quiz__nav">
+        <button type="button" class="btn btn--ghost btn--sm" data-back>{{ 'quiz.back' | t }}</button>
+        <button type="button" class="btn" data-next disabled>{{ 'quiz.next' | t }} {% render 'icon', name: 'arrow' %}</button>
+      </div>
+    </fieldset>
+  {%- endfor -%}
+
+  <div class="quiz__result" data-screen="result" hidden aria-live="polite">
+    <p class="eyebrow">{{ 'quiz.result_eyebrow' | t }}</p>
+    <h2 class="d-1">{{ 'quiz.result_heading' | t }}</h2>
+    <p class="muted" data-summary></p>
+    <ol role="list" class="quiz__picks" data-picks></ol>
+    <div class="quiz__actions">
+      <a class="btn" data-build href="{{ section.settings.pack_page.url }}">{{ 'quiz.build' | t }} {% render 'icon', name: 'arrow' %}</a>
+      <button type="button" class="btn btn--ghost" data-restart>{{ 'quiz.restart' | t }}</button>
+    </div>
+  </div>
+
+  <script type="application/json" data-products>
+    [
+      {%- for p in section.settings.collection.products limit: 24 -%}
+        {%- liquid
+          assign v = p.selected_or_first_available_variant
+          assign tone = p.metafields.racik.color.value | default: settings.color_leaf
+          assign brightness = tone | color_brightness
+          assign on_tone = '#FFFFFF'
+          if brightness > 140
+            assign on_tone = settings.color_ink
+          endif
+          assign img = p.featured_media.preview_image | image_url: width: 500
+          assign quiz_tags = ''
+          for tag in p.tags
+            if tag contains ':'
+              assign quiz_tags = quiz_tags | append: tag | append: ','
+            endif
+          endfor
+        -%}
+        {
+          "handle": {{ p.handle | json }},
+          "title": {{ p.title | json }},
+          "local": {{ p.metafields.racik.local_name.value | json }},
+          "benefit": {{ p.metafields.racik.benefit.value | json }},
+          "url": {{ p.url | json }},
+          "image": {{ img | json }},
+          "tone": {{ tone | json }},
+          "onTone": {{ on_tone | json }},
+          "price": {{ v.price | money | json }},
+          "available": {{ v.available | json }},
+          "tags": {{ quiz_tags | split: ',' | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  </script>
+</ritual-quiz>
+
+{% schema %}
+{
+  "name": "Ritual quiz",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Ritual finder" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Let's find your three." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Four questions about your day. We'll match you with three tonics and set them up as a pack, which takes 10% off." },
+    { "type": "collection", "id": "collection", "label": "Products to recommend from" },
+    { "type": "page", "id": "pack_page", "label": "Pack builder page" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "What would you like more of?" },
+        { "type": "text", "id": "help", "label": "Help text" },
+        { "type": "checkbox", "id": "multi", "label": "Allow several answers", "default": false },
+        {
+          "type": "textarea",
+          "id": "answers",
+          "label": "Answers",
+          "info": "One per line: Label | tag, tag. Products with a matching tag score a point.",
+          "default": "Steady energy | goal:energy\nCalmer evenings | goal:calm"
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Ritual quiz" }]
+}
+{% endschema %}

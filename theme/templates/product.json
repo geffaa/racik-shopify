@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "main": { "type": "main-product", "settings": { "pack_page": "build-a-pack" } },
+    "shelf": { "type": "shelf", "settings": { "eyebrow": "Pairs well", "heading": "Rotate through the week", "collection": "tonics", "limit": 3, "columns": "3" } }
+  },
+  "order": ["main", "shelf"]
+}

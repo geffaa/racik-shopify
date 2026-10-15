@@ -1,0 +1,40 @@
+{%- comment -%}
+  Colour-blocked product tile. - product, eager (bool)
+{%- endcomment -%}
+{%- liquid
+  assign img = product.featured_media.preview_image
+  assign local_name = product.metafields.racik.local_name.value
+-%}
+<article class="tile" style="{% render 'tone', product: product %}">
+  <div class="tile__media">
+    {%- if img -%}
+      {%- if eager -%}
+        {{ img | image_url: width: 900 | image_tag: widths: '300, 450, 600, 900', sizes: '(min-width: 900px) 30vw, 50vw', alt: '', loading: 'eager', fetchpriority: 'high' }}
+      {%- else -%}
+        {{ img | image_url: width: 900 | image_tag: widths: '300, 450, 600, 900', sizes: '(min-width: 900px) 30vw, 50vw', alt: '', loading: 'lazy', decoding: 'async' }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+  </div>
+  <div class="tile__badges">
+    {%- if product.available == false -%}
+      <span class="chip">{{ 'products.sold_out' | t }}</span>
+    {%- elsif product.selling_plan_groups.size > 0 -%}
+      <span class="chip">{% render 'icon', name: 'repeat' %}{{ settings.subscribe_badge }}</span>
+    {%- endif -%}
+  </div>
+  <div class="tile__body">
+    {%- if local_name != blank -%}<span class="small muted">{{ local_name }}</span>{%- endif -%}
+    <a class="tile__name" href="{{ product.url }}">{{ product.title | escape }}</a>
+    {%- if product.metafields.racik.benefit != blank -%}
+      <span class="small muted">{{ product.metafields.racik.benefit.value }}</span>
+    {%- endif -%}
+    <div class="tile__row small">
+      {% render 'price', product: product %}
+      {%- if product.metafields.racik.servings != blank -%}
+        <span class="muted">{{ 'products.servings' | t: count: product.metafields.racik.servings.value }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

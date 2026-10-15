@@ -1,0 +1,23 @@
+{%- comment -%} Delivery estimate and duties note for the customer's country. {%- endcomment -%}
+{%- liquid
+  assign estimate = ''
+  assign lines = settings.delivery_estimates | newline_to_br | split: '<br />'
+  for raw in lines
+    assign pair = raw | strip | split: ':'
+    if pair[0] == localization.country.iso_code
+      assign estimate = pair[1] | strip
+    endif
+  endfor
+-%}
+<div class="delivery xsmall">
+  <span class="delivery__row">{% render 'icon', name: 'truck' %}
+    {%- if estimate != '' -%}
+      {{ 'products.delivery_to' | t: country: localization.country.name, estimate: estimate }}
+    {%- else -%}
+      {{ 'products.delivery_generic' | t: country: localization.country.name }}
+    {%- endif -%}
+  </span>
+  {%- if localization.country.iso_code != 'US' and settings.duties_note != blank -%}
+    <span class="muted">{{ settings.duties_note }}</span>
+  {%- endif -%}
+</div>

@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-quiz",
+      "blocks": {
+        "q1": { "type": "question", "settings": { "question": "What would you like more of?", "help": "Pick the one that matters most right now.", "multi": false,
+          "answers": "Steady energy | goal:energy\nCalmer evenings | goal:calm\nEasier digestion | goal:digest\nClearer focus | goal:focus\nA warming boost | goal:warmth\nThat healthy glow | goal:glow" } },
+        "q2": { "type": "question", "settings": { "question": "When would you drink it?", "multi": false,
+          "answers": "First thing in the morning | time:morning\nAfter lunch | time:afternoon\nIn the evening | time:evening" } },
+        "q3": { "type": "question", "settings": { "question": "Hot or iced?", "multi": false,
+          "answers": "Hot, like tea | serve:hot\nIced, or with sparkling water | serve:cold\nEither works | serve:hot, serve:cold" } },
+        "q4": { "type": "question", "settings": { "question": "Which flavours do you enjoy?", "help": "Choose as many as you like.", "multi": true,
+          "answers": "Earthy & golden | taste:earthy\nBright & citrusy | taste:bright\nSpicy & warming | taste:spicy\nFloral & herbal | taste:floral\nSoft & creamy | taste:creamy" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"],
+      "settings": { "collection": "tonics", "pack_page": "build-a-pack" }
+    }
+  },
+  "order": ["main"]
+}

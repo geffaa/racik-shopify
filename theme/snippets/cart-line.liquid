@@ -1,0 +1,36 @@
+{%- comment -%} One cart line. - item, index (1-based line number) {%- endcomment -%}
+<div class="line" data-line="{{ index }}" data-key="{{ item.key }}" style="{% render 'tone', product: item.product %}">
+  <a href="{{ item.url }}" class="line__img" tabindex="-1" aria-hidden="true">
+    {%- if item.image -%}{{ item.image | image_url: width: 200 | image_tag: widths: '72, 144, 200', sizes: '72px', alt: '', loading: 'lazy' }}{%- endif -%}
+  </a>
+  <div>
+    <a href="{{ item.url }}" class="line__title">{{ item.product.title | escape }}</a>
+    <div class="line__meta xsmall muted">
+      {%- unless item.product.has_only_default_variant -%}<span>{{ item.variant.title }}</span>{%- endunless -%}
+      {%- if item.selling_plan_allocation -%}
+        <span class="sub-tag">{% render 'icon', name: 'repeat' %}{{ item.selling_plan_allocation.selling_plan.name }}</span>
+      {%- endif -%}
+      {%- for p in item.properties -%}
+        {%- assign first_char = p.first | slice: 0 -%}
+        {%- comment -%} "Pack" is kept on the order for staff, but the drawer already groups the pack. {%- endcomment -%}
+        {%- if first_char != '_' and p.last != blank and p.first != 'Pack' -%}<span>{{ p.first }}: {{ p.last }}</span>{%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="line__actions">
+      {%- if item.properties['_pack'] == blank -%}
+        <div class="qty">
+          <button type="button" data-step="-1" aria-label="{{ 'cart.decrease' | t: product: item.product.title | escape }}">{% render 'icon', name: 'minus' %}</button>
+          <input type="number" min="0" inputmode="numeric" value="{{ item.quantity }}" data-qty aria-label="{{ 'cart.quantity' | t: product: item.product.title | escape }}">
+          <button type="button" data-step="1" aria-label="{{ 'cart.increase' | t: product: item.product.title | escape }}">{% render 'icon', name: 'plus' %}</button>
+        </div>
+        <button type="button" class="xsmall link muted" data-remove>{{ 'cart.remove' | t }}</button>
+      {%- else -%}
+        <span class="xsmall muted">× {{ item.quantity }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="line__price small">
+    {%- if item.original_line_price > item.final_line_price -%}<s class="muted" style="font-weight:400">{{ item.original_line_price | money }}</s><br>{%- endif -%}
+    {{ item.final_line_price | money }}
+  </div>
+</div>

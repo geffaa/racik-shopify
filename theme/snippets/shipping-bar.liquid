@@ -1,0 +1,33 @@
+{%- comment -%}
+  Free-shipping progress in the customer's own currency. Thresholds are set
+  per currency (one per market), so EUR shoppers see a real EUR target
+  instead of a converted USD number that changes with the exchange rate.
+{%- endcomment -%}
+{%- liquid
+  assign threshold = 0
+  assign lines = settings.free_shipping_thresholds | newline_to_br | split: '<br />'
+  for raw in lines
+    assign pair = raw | strip | split: ':'
+    if pair[0] == cart.currency.iso_code
+      assign threshold = pair[1] | strip | times: 100
+    endif
+  endfor
+-%}
+{%- if threshold > 0 and cart.item_count > 0 -%}
+  {%- liquid
+    assign remaining = threshold | minus: cart.total_price
+    assign progress = cart.total_price | times: 1.0 | divided_by: threshold
+    if progress > 1
+      assign progress = 1
+    endif
+    assign remaining_money = remaining | money
+  -%}
+  <div class="ship-bar small">
+    <span>
+      {%- if remaining > 0 -%}{{ 'cart.shipping_remaining' | t: amount: remaining_money }}{%- else -%}<strong>{{ 'cart.shipping_free' | t }}</strong>{%- endif -%}
+    </span>
+    <div class="ship-bar__track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress | times: 100 | round }}" aria-label="{{ 'cart.shipping_progress' | t }}">
+      <div class="ship-bar__fill" style="--p: {{ progress }}"></div>
+    </div>
+  </div>
+{%- endif -%}

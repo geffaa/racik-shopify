@@ -1,0 +1,51 @@
+{%- comment -%}
+  Cart lines. Lines sharing a `_pack` property are grouped under one heading
+  and edited as a unit (remove the pack), because the tier discount depends
+  on how many tonics the pack holds. Packs first, then single items.
+{%- endcomment -%}
+{%- liquid
+  assign pack_ids = ','
+  for item in cart.items
+    assign pid = item.properties['_pack']
+    if pid != blank
+      assign needle = ',' | append: pid | append: ','
+      unless pack_ids contains needle
+        assign pack_ids = pack_ids | append: pid | append: ','
+      endunless
+    endif
+  endfor
+  assign pack_list = pack_ids | remove_first: ',' | split: ','
+-%}
+
+{%- for pack in pack_list -%}
+  {%- liquid
+    assign pack_count = 0
+    assign pack_total = 0
+    assign pack_original = 0
+    for item in cart.items
+      if item.properties['_pack'] == pack
+        assign pack_count = pack_count | plus: item.quantity
+        assign pack_total = pack_total | plus: item.final_line_price
+        assign pack_original = pack_original | plus: item.original_line_price
+      endif
+    endfor
+    assign pack_saving = pack_original | minus: pack_total
+    assign pack_saving_money = pack_saving | money
+  -%}
+  <div class="pack-group" data-pack="{{ pack }}">
+    <div class="pack-group__head">
+      <div>
+        <p class="d-3" style="font-size:var(--t-md)">{{ 'cart.pack_title' | t: count: pack_count }}</p>
+        {%- if pack_saving > 0 -%}<p class="xsmall sub-tag">{{ 'cart.pack_saving' | t: amount: pack_saving_money }}</p>{%- endif -%}
+      </div>
+      <button type="button" class="xsmall link muted" data-remove-pack="{{ pack }}">{{ 'cart.remove_pack' | t }}</button>
+    </div>
+    {%- for item in cart.items -%}
+      {%- if item.properties['_pack'] == pack -%}{% render 'cart-line', item: item, index: forloop.index %}{%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endfor -%}
+
+{%- for item in cart.items -%}
+  {%- if item.properties['_pack'] == blank -%}{% render 'cart-line', item: item, index: forloop.index %}{%- endif -%}
+{%- endfor -%}

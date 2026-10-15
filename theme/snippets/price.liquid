@@ -1,0 +1,20 @@
+{%- comment -%}
+  Price for a product, optionally with its best subscription price.
+  - product, variant (optional), show_subscription (bool)
+{%- endcomment -%}
+{%- liquid
+  assign v = variant | default: product.selected_or_first_available_variant
+  assign one_time = v.price | money
+  assign sub_price = nil
+  if show_subscription and v.selling_plan_allocations.size > 0
+    assign best = v.selling_plan_allocations | sort: 'price' | first
+    assign sub_price = best.price | money
+  endif
+-%}
+<span class="price">
+  {%- if v.compare_at_price > v.price -%}<s>{{ v.compare_at_price | money }}</s>{%- endif -%}
+  <span>{{ one_time }}</span>
+  {%- if sub_price -%}
+    <span class="xsmall" style="font-weight:500;opacity:.85">{{ 'products.subscribe_from' | t: price: sub_price }}</span>
+  {%- endif -%}
+</span>

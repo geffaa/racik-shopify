@@ -1,0 +1,51 @@
+<section class="section container" aria-labelledby="faq-{{ section.id }}">
+  <div class="faq">
+    <h2 class="d-1" id="faq-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+    <div class="faq__list">
+      {%- for block in section.blocks -%}
+        <details class="faq__item" {{ block.shopify_attributes }}>
+          <summary class="d-3">{{ block.settings.q | escape }}<span aria-hidden="true">{% render 'icon', name: 'plus' %}</span></summary>
+          <div class="rte muted">{{ block.settings.a }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {%- for block in section.blocks -%}
+        { "@type": "Question", "name": {{ block.settings.q | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.a | strip_html | json }} } }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+</script>
+
+<style>
+  .faq { display: grid; gap: 28px; }
+  @media (min-width: 1000px) { .faq { grid-template-columns: 1fr 1.6fr; } }
+  .faq__item { border-bottom: 1.5px solid var(--line); }
+  .faq__item summary { list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 20px 0; cursor: pointer; font-size: var(--t-md); }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__item summary span { transition: transform 300ms var(--spring); }
+  .faq__item[open] summary span { transform: rotate(45deg); }
+  .faq__item .rte { padding-bottom: 20px; max-width: 62ch; }
+</style>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "div",
+  "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "Questions" }],
+  "blocks": [
+    { "type": "qa", "name": "Question", "settings": [
+      { "type": "text", "id": "q", "label": "Question", "default": "How do I take it?" },
+      { "type": "richtext", "id": "a", "label": "Answer", "default": "<p>Stir one stick into 250 ml of water, hot or cold. Most people take it in the morning.</p>" }
+    ] }
+  ],
+  "presets": [{ "name": "FAQ", "blocks": [{ "type": "qa" }] }]
+}
+{% endschema %}

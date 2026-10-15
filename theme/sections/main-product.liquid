@@ -1,0 +1,183 @@
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign form_id = 'product-form-' | append: section.id
+  assign ingredients = product.metafields.racik.ingredients.value
+  assign has_plans = false
+  if product.selling_plan_groups.size > 0
+    assign has_plans = true
+  endif
+-%}
+
+{{ 'product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product.js' | asset_url }}" type="module"></script>
+
+<product-page class="pdp container" data-section-id="{{ section.id }}" data-url="{{ product.url }}" style="{% render 'tone', product: product %}">
+  {%- comment -%} ---------- Gallery ---------- {%- endcomment -%}
+  <div class="pdp__gallery">
+    <div class="pdp__stage tone" data-stage>
+      {%- for media in product.media -%}
+        <figure class="pdp__slide" data-slide="{{ forloop.index0 }}" {% unless forloop.first %}hidden{% endunless %}>
+          {%- if forloop.first -%}
+            {{ media | image_url: width: 1400 | image_tag: widths: '480, 720, 960, 1200, 1400', sizes: '(min-width: 1000px) 52vw, 100vw', alt: media.alt, loading: 'eager', fetchpriority: 'high', preload: true }}
+          {%- else -%}
+            {{ media | image_url: width: 1400 | image_tag: widths: '480, 720, 960, 1200, 1400', sizes: '(min-width: 1000px) 52vw, 100vw', alt: media.alt, loading: 'lazy' }}
+          {%- endif -%}
+        </figure>
+      {%- endfor -%}
+      {%- if has_plans -%}<span class="sticker pdp__sticker">{{ settings.subscribe_badge }}</span>{%- endif -%}
+    </div>
+    {%- if product.media.size > 1 -%}
+      <div class="pdp__thumbs" role="tablist" aria-label="{{ 'products.gallery' | t }}">
+        {%- for media in product.media -%}
+          <button type="button" class="pdp__thumb tone" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-thumb="{{ forloop.index0 }}" aria-label="{{ media.alt | escape }}">
+            {{ media | image_url: width: 200 | image_tag: widths: '100, 200', sizes: '88px', alt: '', loading: 'lazy' }}
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} ---------- Info ---------- {%- endcomment -%}
+  <div class="pdp__info">
+    <div class="stack" style="--gap:10px">
+      {%- if product.metafields.racik.local_name != blank -%}
+        <p class="eyebrow">{{ product.metafields.racik.local_name.value }}</p>
+      {%- endif -%}
+      <h1 class="d-1">{{ product.title | escape }}</h1>
+      {%- if product.metafields.racik.benefit != blank -%}
+        <p class="lead muted">{{ product.metafields.racik.benefit.value }}*</p>
+      {%- endif -%}
+    </div>
+
+    {%- if ingredients -%}
+      <ul role="list" class="pdp__chips">
+        {%- for ing in ingredients -%}
+          <li><a class="chip" href="{{ ing.system.url }}"><span class="dot" style="background: {{ ing.color }}"></span>{{ ing.name }}</a></li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    <div id="buybox-{{ section.id }}" class="buybox">
+      {%- unless product.has_only_default_variant -%}
+        <fieldset class="pdp__sizes">
+          <legend class="small" style="font-weight:600;margin-bottom:10px">{{ product.options.first }}</legend>
+          <div class="pills">
+            {%- for variant in product.variants -%}
+              <label class="pill">
+                <input type="radio" name="size-{{ section.id }}" value="{{ variant.id }}" data-variant-radio {% if variant.id == current.id %}checked{% endif %} {% unless variant.available %}disabled{% endunless %}>
+                <span>{{ variant.title }}</span>
+              </label>
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      {%- endunless -%}
+
+      <purchase-options class="stack" style="--gap:10px">
+        {%- unless product.requires_selling_plan -%}
+          <label class="choice">
+            <input type="radio" name="purchase-{{ section.id }}" value="" data-label="{{ current.price | money }}" {% unless has_plans %}checked{% endunless %}>
+            <span class="choice__box">
+              <span class="choice__dot"></span>
+              <span style="flex:1"><strong>{{ 'products.one_time' | t }}</strong></span>
+              <span class="price">{{ current.price | money }}</span>
+            </span>
+          </label>
+        {%- endunless -%}
+        {%- for group in product.selling_plan_groups -%}
+          {%- liquid
+            assign first_plan = group.selling_plans.first
+            assign first_alloc = nil
+            for alloc in current.selling_plan_allocations
+              if alloc.selling_plan.id == first_plan.id
+                assign first_alloc = alloc
+              endif
+            endfor
+            assign pct = first_plan.price_adjustments.first.value
+          -%}
+          <label class="choice">
+            <input type="radio" name="purchase-{{ section.id }}" value="{{ first_plan.id }}" data-subscription data-label="{{ first_alloc.price | money }}" {% if forloop.first %}checked{% endif %}>
+            <span class="choice__box choice__box--sub">
+              <span class="choice__dot"></span>
+              <span style="flex:1;display:grid;gap:2px">
+                <strong>{{ group.name }} <span class="chip chip--tone" style="margin-left:6px">{{ 'products.save_pct' | t: pct: pct }}</span></strong>
+                <span class="xsmall muted">{% if localization.country.iso_code == 'US' %}{{ 'products.sub_perks_us' | t }}{% else %}{{ 'products.sub_perks' | t }}{% endif %}</span>
+              </span>
+              <span class="price">{% if first_alloc.compare_at_price > first_alloc.price %}<s>{{ first_alloc.compare_at_price | money }}</s>{% endif %}<span>{{ first_alloc.price | money }}</span></span>
+            </span>
+          </label>
+          {%- if group.selling_plans.size > 1 -%}
+            <div class="freq" data-frequency>
+              <label for="freq-{{ section.id }}" class="small">{{ 'products.deliver_every' | t }}</label>
+              <select id="freq-{{ section.id }}" class="select">
+                {%- for plan in group.selling_plans -%}
+                  {%- liquid
+                    assign plan_price = current.price
+                    for alloc in current.selling_plan_allocations
+                      if alloc.selling_plan.id == plan.id
+                        assign plan_price = alloc.price
+                      endif
+                    endfor
+                  -%}
+                  <option value="{{ plan.id }}" data-label="{{ plan_price | money }}">{{ plan.options.first.value }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </purchase-options>
+
+      <product-form>
+        {%- form 'product', product, id: form_id, novalidate: 'novalidate' -%}
+          <input type="hidden" name="id" value="{{ current.id }}">
+          <input type="hidden" name="selling_plan" value="{% if has_plans %}{{ product.selling_plan_groups.first.selling_plans.first.id }}{% endif %}" data-plan-input>
+          <button type="submit" name="add" class="btn btn--block btn--atc" data-atc {% unless current.available %}disabled{% endunless %}>
+            {%- if current.available -%}
+              <span>{{ 'products.add_to_cart' | t }}</span><span aria-hidden="true">·</span><span data-atc-price>{% if has_plans %}{{ current.selling_plan_allocations.first.price | money }}{% else %}{{ current.price | money }}{% endif %}</span>
+            {%- else -%}
+              {{ 'products.sold_out' | t }}
+            {%- endif -%}
+          </button>
+          <p class="small" role="alert" data-error hidden style="color:#9B2C1E"></p>
+        {%- endform -%}
+      </product-form>
+    </div>
+
+    {% render 'delivery-estimate' %}
+
+    {%- if section.settings.pack_page != blank and has_plans -%}
+      <a class="pack-cta" href="{{ section.settings.pack_page.url }}?add={{ product.handle }}">
+        <span class="pack-cta__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span><strong>{{ 'products.pack_cta' | t }}</strong><br><span class="small muted">{{ 'products.pack_cta_text' | t }}</span></span>
+        {% render 'icon', name: 'arrow' %}
+      </a>
+    {%- endif -%}
+
+    <div class="pdp__acc">
+      <details open>
+        <summary class="d-3">{{ 'products.ritual' | t }}<span aria-hidden="true">{% render 'icon', name: 'plus' %}</span></summary>
+        <div class="rte">{{ product.metafields.racik.ritual.value | default: product.description | newline_to_br }}</div>
+      </details>
+      <details>
+        <summary class="d-3">{{ 'products.about' | t }}<span aria-hidden="true">{% render 'icon', name: 'plus' %}</span></summary>
+        <div class="rte">{{ product.description }}</div>
+      </details>
+      <details>
+        <summary class="d-3">{{ 'products.facts_title' | t }}<span aria-hidden="true">{% render 'icon', name: 'plus' %}</span></summary>
+        {% render 'supplement-facts', product: product %}
+      </details>
+    </div>
+    <p class="xsmall muted">* {{ 'products.fda' | t }}</p>
+  </div>
+</product-page>
+
+<script type="application/ld+json">{{ product | structured_data }}</script>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "section",
+  "settings": [
+    { "type": "page", "id": "pack_page", "label": "Pack builder page" }
+  ]
+}
+{% endschema %}

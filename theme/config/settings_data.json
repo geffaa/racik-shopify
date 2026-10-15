@@ -1,0 +1,16 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "wordmark": "racik",
+      "color_paper": "#FBFAF6",
+      "color_ink": "#17261C",
+      "color_muted": "#4C5A50",
+      "color_line": "#E2DFD3",
+      "color_leaf": "#2E5B39",
+      "pack_tiers": "3:10, 5:15",
+      "subscribe_badge": "Save 15%",
+      "consent_banner": true
+    }
+  }
+}

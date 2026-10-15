@@ -1,0 +1,16 @@
+{%- comment -%}
+  Outputs CSS custom properties for a product's colour: --tone and a
+  readable foreground (--on-tone), picked from the colour's brightness so
+  merchants can add a new tonic without worrying about contrast. The 140
+  cut-off keeps mid-tones like amber on dark text (white would be ~3:1).
+{%- endcomment -%}
+{%- liquid
+  assign tone = product.metafields.racik.color.value | default: settings.color_leaf
+  assign brightness = tone | color_brightness
+  if brightness > 140
+    assign on_tone = settings.color_ink
+  else
+    assign on_tone = '#FFFFFF'
+  endif
+-%}
+--tone: {{ tone }}; --on-tone: {{ on_tone }};

@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "main": { "type": "main-ingredient", "settings": {} },
+    "shelf": { "type": "shelf", "settings": { "eyebrow": "Keep exploring", "heading": "All six tonics", "collection": "tonics", "limit": 3, "columns": "3" } }
+  },
+  "order": ["main", "shelf"]
+}

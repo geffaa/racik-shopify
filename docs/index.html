@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Racik Store Build — Yodhimas Geffananda</title>
+<meta name="description" content="Shopify build for an international wellness brand: product quiz, build-your-own packs priced by a Shopify Function, subscriptions, metaobjects and Markets. 75-second demo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geffaa.github.io/racik-shopify/">
+<meta property="og:title" content="Racik Store Build — Shopify developer portfolio">
+<meta property="og:description" content="Product quiz, build-your-own packs priced by a Shopify Function, subscriptions, metaobjects and Markets.">
+<meta property="og:image" content="https://geffaa.github.io/racik-shopify/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap">
+<style>
+  /* Racik's own palette and type, so the case study looks like the brand it shows. */
+  :root {
+    --paper: #FBFAF6; --ink: #17261C; --muted: #4C5A50; --line: #E2DFD3; --leaf: #2E5B39;
+    --glow: #F2B233; --calm: #EADBB6; --digest: #D9822B; --warmth: #B5412E; --focus: #3D4FA3; --energy: #4A7A2E;
+    --font: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.55 var(--font); font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
+  .page { max-width: 1120px; margin: 0 auto; padding: 28px max(16px, env(safe-area-inset-right, 0px)) 72px max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 44px; }
+  .top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; font-size: 15px; font-weight: 600; color: var(--muted); }
+  .dots { display: flex; gap: 8px; }
+  .dots i { width: 22px; height: 22px; border-radius: 50%; display: block; }
+  h1 { margin: 14px 0 0; font-size: clamp(3rem, 1.6rem + 6vw, 6.4rem); font-weight: 780; line-height: .9; letter-spacing: -.05em; }
+  h1 span { color: var(--leaf); }
+  .lede { margin: 18px 0 0; max-width: 60ch; font-size: 20px; line-height: 1.45; color: var(--muted); }
+  .lede b { color: var(--ink); font-weight: 650; }
+  video { display: block; width: 100%; aspect-ratio: 16 / 10; border-radius: 28px; background: var(--ink); }
+  .note { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
+  h2 { margin: 0 0 14px; font-size: 15px; font-weight: 650; color: var(--muted); }
+  .chapters { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .chapters button { width: 100%; display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 2px 16px; padding: 14px 18px; border: 1.5px solid var(--line); border-radius: 18px; background: #fff; color: inherit; font: inherit; text-align: left; cursor: pointer; transition: border-color .2s; }
+  .chapters button:hover { border-color: var(--ink); }
+  .chapters button:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  .chapters time { grid-row: span 2; font-weight: 700; color: var(--leaf); }
+  .ch-title { font-weight: 650; }
+  .ch-desc { font-size: 15px; color: var(--muted); }
+  .chapters li[aria-current="true"] button { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .col { border-radius: 24px; padding: 22px; display: grid; gap: 10px; align-content: start; }
+  .col p { margin: 0; font-weight: 700; font-size: 18px; }
+  .col ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size: 15.5px; }
+  .c1 { background: var(--glow); color: var(--ink); }
+  .c2 { background: var(--focus); color: #fff; }
+  .c3 { background: var(--warmth); color: #fff; }
+  .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .stat { border: 1.5px solid var(--line); border-radius: 22px; background: #fff; padding: 18px; display: grid; gap: 4px; }
+  .num { font-size: 40px; font-weight: 760; letter-spacing: -.03em; line-height: 1; }
+  .stat span:last-child { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px 24px; font-size: 14px; color: var(--muted); }
+  .foot a { color: var(--ink); font-weight: 650; }
+  @media (max-width: 760px) {
+    .cols { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top"><span>Portfolio · Shopify developer</span><span>Yodhimas Geffananda</span></div>
+
+  <header>
+    <div class="dots" aria-hidden="true"><i style="background:var(--glow)"></i><i style="background:var(--calm)"></i><i style="background:var(--digest)"></i><i style="background:var(--warmth)"></i><i style="background:var(--focus)"></i><i style="background:var(--energy)"></i></div>
+    <h1>racik<span>.</span> store build</h1>
+    <p class="lede">A Shopify build for a fictional Indonesian wellness brand selling to the US, UK, EU and Australia. <b>A product quiz, build-your-own packs priced by a Shopify Function, and subscribe &amp; save</b>, on a custom theme with metaobjects and Markets.</p>
+  </header>
+
+  <section aria-label="Demo video">
+    <video id="demo" controls playsinline preload="metadata" poster="poster.jpg">
+      <source src="racik-demo.mp4" type="video/mp4">
+    </video>
+    <p class="note">1:16 · no sound · recorded from the theme running locally on the demo catalog.</p>
+  </section>
+
+  <section aria-labelledby="ch-h">
+    <h2 id="ch-h">Chapters</h2>
+    <ol class="chapters" id="chapters">
+      <li><button type="button" data-t="3.6"><time>0:03</time><span class="ch-title">Home</span><span class="ch-desc">Colour per product from a metafield, with contrast picked automatically. Ingredients as metaobjects.</span></button></li>
+      <li><button type="button" data-t="14.9"><time>0:14</time><span class="ch-title">Product quiz</span><span class="ch-desc">Questions are theme-editor blocks; answers map to product tags. Three matches with reasons.</span></button></li>
+      <li><button type="button" data-t="28.5"><time>0:28</time><span class="ch-title">Build-your-own pack</span><span class="ch-desc">Tiered discount (10% at 3, 15% at 5) enforced at checkout by a Shopify Function.</span></button></li>
+      <li><button type="button" data-t="41.3"><time>0:41</time><span class="ch-title">Subscribe &amp; save</span><span class="ch-desc">Selling plans, delivery frequency, size switch, FDA-style Supplement Facts.</span></button></li>
+      <li><button type="button" data-t="54.2"><time>0:54</time><span class="ch-title">Markets &amp; privacy</span><span class="ch-desc">Country switch to euros, duties note, consent banner for EU visitors only.</span></button></li>
+      <li><button type="button" data-t="61.6"><time>1:01</time><span class="ch-title">Mobile</span><span class="ch-desc">Pack tray as a bottom sheet with folding options.</span></button></li>
+      <li><button type="button" data-t="69.9"><time>1:09</time><span class="ch-title">Tests</span><span class="ch-desc">Function, seed and end-to-end results.</span></button></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="what-h">
+    <h2 id="what-h">What it shows</h2>
+    <div class="cols">
+      <div class="col c1"><p>Theme</p><ul><li>Custom Online Store 2.0 theme, no jQuery</li><li>Quiz and pack builder as editable sections</li><li>Metaobject pages for ingredients</li></ul></div>
+      <div class="col c2"><p>Shopify platform</p><ul><li>Discount Function (JavaScript) with tiers in a metafield</li><li>Selling plans for subscriptions</li><li>Markets: per-currency shipping thresholds, duties</li></ul></div>
+      <div class="col c3"><p>Quality</p><ul><li>WCAG contrast on every colour tile</li><li>Consent through the Customer Privacy API</li><li>Seed script for a dev store via the Admin API</li></ul></div>
+    </div>
+  </section>
+
+  <section aria-label="Verification" class="stats">
+    <div class="stat"><span class="num">0</span><span>Theme Check offenses</span></div>
+    <div class="stat"><span class="num">14</span><span>Function &amp; seed tests</span></div>
+    <div class="stat"><span class="num">13/13</span><span>End-to-end checks</span></div>
+    <div class="stat"><span class="num">100</span><span>Lighthouse accessibility</span></div>
+  </section>
+
+  <footer class="foot">
+    <span>Racik is a fictional brand made for this portfolio.</span>
+    <a href="https://github.com/geffaa/racik-shopify">Source code on GitHub →</a>
+  </footer>
+</div>
+<script>
+  const video = document.getElementById('demo');
+  const items = [...document.querySelectorAll('#chapters li')];
+  const starts = items.map((li) => Number(li.querySelector('button').dataset.t));
+  items.forEach((li, i) => li.querySelector('button').addEventListener('click', () => {
+    video.currentTime = starts[i];
+    video.play().catch(() => {});
+    video.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }));
+  video.addEventListener('timeupdate', () => {
+    let current = -1;
+    starts.forEach((s, i) => { if (video.currentTime >= s - 0.05) current = i; });
+    items.forEach((li, i) => li.setAttribute('aria-current', String(i === current)));
+  });
+</script>
+</body>
+</html>

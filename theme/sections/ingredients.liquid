@@ -1,0 +1,57 @@
+{%- comment -%}
+  Ingredient index from the `ingredient` metaobject definition. Each entry
+  links to its own metaobject page (templates/metaobject/ingredient.json),
+  so new botanicals appear here as soon as merchandising adds them.
+{%- endcomment -%}
+<section class="section container" aria-labelledby="ing-{{ section.id }}">
+  <div class="sec-head">
+    <div class="stack" style="--gap:10px">
+      <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      <h2 class="d-1" id="ing-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+    </div>
+    <p class="muted" style="max-width:38ch">{{ section.settings.text | escape }}</p>
+  </div>
+  <ul role="list" class="ing-grid">
+    {%- for ing in shop.metaobjects.ingredient.values limit: section.settings.limit -%}
+      <li>
+        <a href="{{ ing.system.url }}" class="ing" style="--tone: {{ ing.color | default: settings.color_leaf }}">
+          {%- assign art = ing.illustration.value -%}
+          {%- if art -%}
+            <span class="ing__art" aria-hidden="true">{{ art | image_url: width: 160 | image_tag: widths: '80, 160', sizes: '64px', alt: '', loading: 'lazy' }}</span>
+          {%- else -%}
+            <span class="ing__dot" aria-hidden="true"></span>
+          {%- endif -%}
+          <span class="ing__name">{{ ing.name }}</span>
+          <span class="xsmall muted"><i>{{ ing.latin_name }}</i></span>
+          <span class="xsmall">{{ ing.origin }}</span>
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>
+
+<style>
+  .ing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  @media (min-width: 700px) { .ing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .ing-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+  .ing { display: grid; gap: 4px; padding: 18px; border-radius: var(--r-md); background: #fff; border: 1.5px solid var(--line); text-decoration: none; height: 100%; transition: border-color 200ms var(--ease), transform 300ms var(--spring); }
+  .ing:hover { border-color: var(--tone); transform: translateY(-3px); }
+  .ing__dot { width: 34px; height: 34px; border-radius: 50%; background: var(--tone); margin-bottom: 10px; box-shadow: inset -6px -6px 0 rgba(0,0,0,.08); }
+  .ing__art { width: 64px; height: 64px; margin-bottom: 6px; transition: transform 400ms var(--spring); }
+  .ing:hover .ing__art { transform: rotate(-10deg) scale(1.08); }
+  .ing__name { font-weight: 650; font-size: var(--t-md); }
+</style>
+
+{% schema %}
+{
+  "name": "Ingredients",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What's inside" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Ten plants from three islands" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Every ingredient is traceable to the region it's grown in. Tap one to read where it comes from." },
+    { "type": "range", "id": "limit", "label": "Ingredients", "min": 3, "max": 20, "step": 1, "default": 10 }
+  ],
+  "presets": [{ "name": "Ingredients" }]
+}
+{% endschema %}

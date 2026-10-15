@@ -1,0 +1,122 @@
+{
+  "accessibility": {
+    "skip": "Skip to content"
+  },
+  "general": {
+    "close": "Close",
+    "error": "Something went wrong. Please try again.",
+    "not_found": "This page wandered off.",
+    "view_all": "View all"
+  },
+  "header": {
+    "cart": {
+      "one": "Bag, {{ count }} item",
+      "other": "Bag, {{ count }} items"
+    },
+    "country": "Country and currency",
+    "menu": "Menu",
+    "primary": "Primary",
+    "quiz": "Find your blend"
+  },
+  "newsletter": {
+    "label": "Email",
+    "placeholder": "you@example.com",
+    "submit": "Subscribe",
+    "success": "You're on the list. First letter arrives on Sunday."
+  },
+  "consent": {
+    "title": "Cookies, briefly",
+    "text": "We use cookies to understand what people read and to measure ads. You can say no and the shop works the same.",
+    "accept": "Accept all",
+    "decline": "Essential only"
+  },
+  "products": {
+    "about": "About this blend",
+    "add_to_cart": "Add to bag",
+    "deliver_every": "Deliver every",
+    "delivery_to": "Delivers to {{ country }} in {{ estimate }}",
+    "delivery_generic": "Ships to {{ country }}",
+    "facts_title": "Supplement Facts",
+    "facts_serving": "Serving size {{ size }}",
+    "facts_servings": "Servings per container {{ count }}",
+    "facts_amount": "Amount per serving",
+    "facts_dv": "% Daily Value",
+    "facts_nutrient": "Nutrient",
+    "fda": "These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.",
+    "gallery": "Product images",
+    "one_time": "One-time purchase",
+    "pack_cta": "Make it a pack",
+    "pack_cta_text": "Add two more tonics and save 10%, or four more for 15%.",
+    "ritual": "How to take it",
+    "save_pct": "Save {{ pct }}%",
+    "servings": {
+      "one": "{{ count }} stick",
+      "other": "{{ count }} sticks"
+    },
+    "sold_out": "Sold out",
+    "sub_perks": "Skip, swap or cancel anytime.",
+    "subscribe_from": "or {{ price }} subscribed",
+    "sub_perks_us": "Skip, swap or cancel anytime. Free US shipping."
+  },
+  "pack": {
+    "add": "Add pack to bag",
+    "add_one": "Add one {{ product }}",
+    "remove_one": "Remove one {{ product }}",
+    "quantity_for": "Quantity of {{ product }}",
+    "note": "Pack discounts are applied at checkout and stack with the subscription price.",
+    "subtotal": "Subtotal",
+    "total": "Estimated total",
+    "your_pack": "Your pack",
+    "options": "Options"
+  },
+  "quiz": {
+    "back": "Back",
+    "build": "Build this pack",
+    "next": "Next",
+    "no_js": "Browse all tonics instead",
+    "restart": "Start over",
+    "result_eyebrow": "Your ritual",
+    "result_heading": "Three tonics for how you live",
+    "start": "Start the quiz"
+  },
+  "cart": {
+    "added": "Added to your bag",
+    "browse": "Browse the tonics",
+    "checkout": "Check out securely",
+    "decrease": "Decrease {{ product }}",
+    "increase": "Increase {{ product }}",
+    "empty": "Your bag is empty",
+    "empty_text": "Not sure what to pick? The quiz takes about a minute.",
+    "pack_saving": "You save {{ amount }} as a pack",
+    "pack_title": {
+      "one": "Pack of {{ count }}",
+      "other": "Pack of {{ count }}"
+    },
+    "quantity": "Quantity of {{ product }}",
+    "remove": "Remove",
+    "remove_pack": "Remove pack",
+    "shipping_free": "Free shipping unlocked",
+    "shipping_progress": "Progress to free shipping",
+    "shipping_remaining": "{{ amount }} away from free shipping",
+    "subtotal": "Subtotal",
+    "take_quiz": "Take the quiz",
+    "taxes": "Taxes, duties and shipping are calculated at checkout.",
+    "title": "Your bag"
+  },
+  "collections": {
+    "all": "All",
+    "empty": "No tonics here yet.",
+    "filter_goal": "Filter by goal"
+  },
+  "compare": {
+    "feature": "Feature",
+    "one_time": "One-time",
+    "subscription": "Subscription"
+  },
+  "ingredients": {
+    "back": "← All ingredients",
+    "found_in": "Found in",
+    "harvest": "Harvest",
+    "origin": "Grown in"
+  }
+}

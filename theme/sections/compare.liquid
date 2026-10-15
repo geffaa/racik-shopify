@@ -1,0 +1,55 @@
+<section class="section container" aria-labelledby="cmp-{{ section.id }}">
+  <div class="cmp">
+    <div class="stack" style="--gap:16px;align-content:start">
+      <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      <h2 class="d-1" id="cmp-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      <p class="muted">{{ section.settings.text | escape }}</p>
+    </div>
+    <div class="cmp__table-wrap">
+      <table class="cmp__table">
+        <thead><tr><th scope="col"><span class="visually-hidden">{{ 'compare.feature' | t }}</span></th><th scope="col">{{ 'compare.one_time' | t }}</th><th scope="col" class="cmp__hi">{{ 'compare.subscription' | t }}</th></tr></thead>
+        <tbody>
+          {%- for block in section.blocks -%}
+            <tr {{ block.shopify_attributes }}>
+              <th scope="row">{{ block.settings.feature | escape }}</th>
+              <td>{{ block.settings.one_time | escape }}</td>
+              <td class="cmp__hi">{{ block.settings.subscription | escape }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cmp { display: grid; gap: 32px; }
+  @media (min-width: 1000px) { .cmp { grid-template-columns: 1fr 1.3fr; align-items: start; } }
+  .cmp__table-wrap { overflow-x: auto; border-radius: var(--r-lg); background: #fff; border: 1.5px solid var(--line); }
+  .cmp__table { width: 100%; min-width: 460px; }
+  .cmp__table th, .cmp__table td { padding: 16px 20px; text-align: left; border-bottom: 1px solid var(--line); }
+  .cmp__table tbody tr:last-child > * { border-bottom: 0; }
+  .cmp__table thead th { font-weight: 650; }
+  .cmp__table tbody th { font-weight: 500; color: var(--muted); }
+  .cmp__hi { background: color-mix(in srgb, var(--leaf) 8%, transparent); font-weight: 600; }
+</style>
+
+{% schema %}
+{
+  "name": "Subscription comparison",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "One-time or subscribe" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Subscribing is cheaper and you stay in control" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Skip a month, swap a flavour or cancel from your account page. No emails to customer service." }
+  ],
+  "blocks": [
+    { "type": "row", "name": "Row", "settings": [
+      { "type": "text", "id": "feature", "label": "Feature", "default": "Price per stick" },
+      { "type": "text", "id": "one_time", "label": "One-time", "default": "$1.13" },
+      { "type": "text", "id": "subscription", "label": "Subscription", "default": "$0.96" }
+    ] }
+  ],
+  "presets": [{ "name": "Subscription comparison", "blocks": [{ "type": "row" }] }]
+}
+{% endschema %}

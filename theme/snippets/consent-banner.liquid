@@ -1,0 +1,13 @@
+{%- comment -%}
+  Cookie consent via Shopify's Customer Privacy API. The banner stays hidden
+  until the API reports that this visitor's region requires consent, so US
+  visitors (no requirement) never see it and EU visitors always do.
+{%- endcomment -%}
+<consent-banner class="consent" role="dialog" aria-labelledby="consent-title" aria-describedby="consent-text" hidden>
+  <p class="d-3" id="consent-title" style="font-size:var(--t-md)">{{ 'consent.title' | t }}</p>
+  <p class="small" id="consent-text" style="opacity:.8">{{ 'consent.text' | t }}</p>
+  <div class="consent__actions">
+    <button type="button" class="btn btn--light btn--sm" data-consent="all">{{ 'consent.accept' | t }}</button>
+    <button type="button" class="btn btn--ghost btn--sm" style="--fg:var(--paper)" data-consent="essential">{{ 'consent.decline' | t }}</button>
+  </div>
+</consent-banner>

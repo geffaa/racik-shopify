@@ -1,0 +1,61 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__signup">
+        <p class="d-2">{{ section.settings.heading | escape }}</p>
+        <p class="small" style="opacity:.75">{{ section.settings.text | escape }}</p>
+        {%- form 'customer', id: 'footer-signup' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter,source:footer">
+          {%- if form.posted_successfully? -%}
+            <p class="small" role="status">{{ 'newsletter.success' | t }}</p>
+          {%- else -%}
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <label for="footer-email" class="visually-hidden">{{ 'newsletter.label' | t }}</label>
+              <input id="footer-email" class="input" type="email" name="contact[email]" required autocomplete="email" placeholder="{{ 'newsletter.placeholder' | t }}" style="flex:1 1 220px">
+              <button class="btn btn--light" type="submit">{{ 'newsletter.submit' | t }}</button>
+            </div>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+      {%- for block in section.blocks -%}
+        <nav {{ block.shopify_attributes }} aria-label="{{ block.settings.heading | escape }}">
+          <p class="small" style="opacity:.6">{{ block.settings.heading | escape }}</p>
+          <ul role="list" class="footer__links">
+            {%- for link in block.settings.menu.links -%}<li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>{%- endfor -%}
+          </ul>
+        </nav>
+      {%- endfor -%}
+    </div>
+    <div class="footer__legal xsmall">
+      <p class="fda">{{ section.settings.disclaimer | escape }}</p>
+      <p style="opacity:.6">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "enabled_on": { "groups": ["footer"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A short letter every other Sunday." },
+    { "type": "text", "id": "text", "label": "Text", "default": "Harvest notes from our growers in Java and Bali, and early access to seasonal blends." },
+    {
+      "type": "textarea",
+      "id": "disclaimer",
+      "label": "Disclaimer",
+      "default": "*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    }
+  ]
+}
+{% endschema %}

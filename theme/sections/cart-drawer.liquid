@@ -1,0 +1,30 @@
+<dialog class="drawer" id="cart-drawer" aria-label="{{ 'cart.title' | t }}">
+  <cart-items data-cart-root="cart-drawer" data-count="{{ cart.item_count }}" style="display:contents">
+    <div class="drawer__head">
+      <p class="d-3">{{ 'cart.title' | t }} <span class="muted">({{ cart.item_count }})</span></p>
+      <button type="button" class="icon-btn" data-close-dialog aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+    </div>
+    {%- if cart.item_count > 0 -%}
+      <div class="drawer__body">
+        {% render 'shipping-bar' %}
+        {% render 'cart-lines' %}
+      </div>
+      <form class="drawer__foot" action="{{ routes.cart_url }}" method="post">
+        <div class="totals"><span>{{ 'cart.subtotal' | t }}</span><span>{{ cart.total_price | money_with_currency }}</span></div>
+        <p class="xsmall muted">{{ 'cart.taxes' | t }}</p>
+        <button type="submit" name="checkout" class="btn btn--block">{{ 'cart.checkout' | t }} {% render 'icon', name: 'arrow' %}</button>
+      </form>
+    {%- else -%}
+      <div class="drawer__body stack" style="--gap:18px;align-content:center;text-align:center;justify-items:center">
+        <p class="d-2">{{ 'cart.empty' | t }}</p>
+        <p class="muted small">{{ 'cart.empty_text' | t }}</p>
+        <a href="/pages/quiz" class="btn">{{ 'cart.take_quiz' | t }}</a>
+        <a href="{{ routes.all_products_collection_url }}" class="link small">{{ 'cart.browse' | t }}</a>
+      </div>
+    {%- endif -%}
+  </cart-items>
+</dialog>
+
+{% schema %}
+{ "name": "Cart drawer", "settings": [] }
+{% endschema %}

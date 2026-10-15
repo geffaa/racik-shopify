@@ -1,0 +1,79 @@
+<header class="header">
+  <div class="container header__inner">
+    <button type="button" class="icon-btn menu-btn" data-open-dialog="menu" aria-label="{{ 'header.menu' | t }}">{% render 'icon', name: 'menu' %}</button>
+    <a href="{{ routes.root_url }}" class="wordmark" aria-label="{{ shop.name | escape }}">
+      {%- if settings.logo -%}
+        {{ settings.logo | image_url: width: 300 | image_tag: height: 32, alt: shop.name }}
+      {%- else -%}
+        {{ settings.wordmark | escape }}<span>.</span>
+      {%- endif -%}
+    </a>
+    <nav class="nav" aria-label="{{ 'header.primary' | t }}">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+      {%- endfor -%}
+    </nav>
+    <div class="header__actions">
+      {%- if localization.available_countries.size > 1 -%}
+        {%- form 'localization', class: 'locale', id: 'header-locale' -%}
+          <label for="header-country" class="visually-hidden">{{ 'header.country' | t }}</label>
+          <select id="header-country" name="country_code" class="select">
+            {%- for country in localization.available_countries -%}
+              <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+                {{ country.name }} · {{ country.currency.iso_code }} {{ country.currency.symbol }}
+              </option>
+            {%- endfor -%}
+          </select>
+        {%- endform -%}
+      {%- endif -%}
+      {%- if section.settings.quiz_link != blank -%}
+        <a href="{{ section.settings.quiz_link }}" class="btn btn--sm btn--ghost" style="display:none" data-desktop-only>{{ 'header.quiz' | t }}</a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="icon-btn" data-open-dialog="cart-drawer" aria-label="{{ 'header.cart' | t: count: cart.item_count }}">
+        {% render 'icon', name: 'bag' %}
+        <span class="cart-badge" data-cart-count data-count="{{ cart.item_count }}">{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<dialog class="drawer drawer--left" id="menu" aria-label="{{ 'header.menu' | t }}">
+  <div class="drawer__head">
+    <span class="wordmark" style="font-size:1.5rem">{{ settings.wordmark }}<span>.</span></span>
+    <button type="button" class="icon-btn" data-close-dialog aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+  </div>
+  <div class="drawer__body">
+    <nav class="stack" style="--gap:4px">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}" class="d-2" style="text-decoration:none;padding:8px 0">{{ link.title | escape }}</a>
+      {%- endfor -%}
+    </nav>
+  </div>
+  {%- if localization.available_countries.size > 1 -%}
+    <div class="drawer__foot">
+      {%- form 'localization', id: 'menu-locale' -%}
+        <label for="menu-country" class="small muted">{{ 'header.country' | t }}</label>
+        <select id="menu-country" name="country_code" class="select" style="margin-top:6px">
+          {%- for country in localization.available_countries -%}
+            <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>{{ country.name }} · {{ country.currency.iso_code }}</option>
+          {%- endfor -%}
+        </select>
+      {%- endform -%}
+    </div>
+  {%- endif -%}
+</dialog>
+
+<style>
+  @media (min-width: 1000px) { [data-desktop-only] { display: inline-flex !important; } }
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "url", "id": "quiz_link", "label": "Quiz button link" }
+  ]
+}
+{% endschema %}

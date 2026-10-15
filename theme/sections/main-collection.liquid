@@ -1,0 +1,44 @@
+{%- comment -%} Goal filter uses tag URLs (/collections/all/goal-energy), so it works without JS and is cacheable. {%- endcomment -%}
+<section class="container section--tight">
+  <div class="stack" style="--gap:12px;margin-bottom:24px">
+    <h1 class="d-1">{{ collection.title | escape }}</h1>
+    {%- if collection.description != blank -%}<div class="muted rte" style="max-width:56ch">{{ collection.description }}</div>{%- endif -%}
+  </div>
+  {%- liquid
+    assign goal_list = ''
+    for tag in collection.all_tags
+      if tag contains 'goal:'
+        assign goal_list = goal_list | append: tag | append: '|'
+      endif
+    endfor
+    assign goal_tags = goal_list | split: '|'
+  -%}
+  {%- if goal_tags.size > 0 -%}
+    <nav class="goals" aria-label="{{ 'collections.filter_goal' | t }}">
+      <a href="{{ collection.url }}" class="chip goal" {% if current_tags == blank %}aria-current="page"{% endif %}>{{ 'collections.all' | t }}</a>
+      {%- for tag in goal_tags -%}
+        <a href="{{ collection.url }}/{{ tag | handleize }}" class="chip goal" {% if current_tags contains tag %}aria-current="page"{% endif %}>{{ tag | remove: 'goal:' | capitalize }}</a>
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
+  {%- paginate collection.products by 24 -%}
+    <ul role="list" class="tiles" style="--tiles-d: 3">
+      {%- for product in collection.products -%}
+        <li>{% render 'product-tile', product: product, eager: forloop.first %}</li>
+      {%- else -%}
+        <li class="muted">{{ 'collections.empty' | t }}</li>
+      {%- endfor -%}
+    </ul>
+    {%- if paginate.pages > 1 -%}<div style="margin-top:32px">{{ paginate | default_pagination }}</div>{%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+<style>
+  .goals { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .goal { text-decoration: none; padding: 9px 16px; font-size: var(--t-sm); }
+  .goal[aria-current='page'] { background: var(--ink); color: var(--paper); }
+</style>
+
+{% schema %}
+{ "name": "Collection", "tag": "section", "settings": [] }
+{% endschema %}

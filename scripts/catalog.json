@@ -1,0 +1,480 @@
+{
+  "tonics": [
+    {
+      "handle": "glow",
+      "title": "Glow",
+      "local": "Kunyit Asam",
+      "benefit": "Turmeric and tamarind for skin that looks rested",
+      "color": "#F2B233",
+      "price": 34,
+      "price15": 19,
+      "tags": [
+        "goal:glow",
+        "time:morning",
+        "serve:cold",
+        "taste:bright",
+        "taste:earthy"
+      ],
+      "ingredients": [
+        "turmeric",
+        "tamarind"
+      ],
+      "ritual": "Stir one stick into 250 ml of cold water or sparkling water.\nAdd ice and a squeeze of lime.\nBest in the morning, with or without food.",
+      "description": "<p>The most loved jamu in Java. Fresh turmeric root and tart tamarind, sweetened with a little palm sugar, as the mbok jamu still make it each morning in Solo.</p>",
+      "facts": {
+        "serving_size": "1 stick (3 g)",
+        "servings": 30,
+        "rows": [
+          {
+            "name": "Calories",
+            "amount": "10",
+            "dv": ""
+          },
+          {
+            "name": "Total Carbohydrate",
+            "amount": "2 g",
+            "dv": "1%*"
+          },
+          {
+            "name": "Total Sugars",
+            "amount": "1 g",
+            "dv": "†",
+            "indent": true
+          }
+        ],
+        "blend": {
+          "name": "Kunyit Asam blend",
+          "amount": "2.6 g",
+          "items": [
+            "Turmeric rhizome (Curcuma longa)",
+            "Tamarind fruit",
+            "Coconut palm sugar",
+            "Black pepper"
+          ]
+        },
+        "footnotes": [
+          "*Percent Daily Values are based on a 2,000 calorie diet.",
+          "†Daily Value not established."
+        ]
+      }
+    },
+    {
+      "handle": "calm",
+      "title": "Calm",
+      "local": "Beras Kencur",
+      "benefit": "Rice and aromatic ginger to wind down the evening",
+      "color": "#EADBB6",
+      "price": 34,
+      "price15": 19,
+      "tags": [
+        "goal:calm",
+        "time:evening",
+        "serve:hot",
+        "taste:creamy"
+      ],
+      "ingredients": [
+        "rice",
+        "aromatic-ginger"
+      ],
+      "ritual": "Stir one stick into 250 ml of warm water or warm oat milk.\nSip slowly an hour before bed.",
+      "description": "<p>Toasted rice and kencur, a gentle, camphor-bright ginger. Soft, a little sweet, and the jamu Javanese grandmothers give children.</p>",
+      "facts": {
+        "serving_size": "1 stick (3 g)",
+        "servings": 30,
+        "rows": [
+          {
+            "name": "Calories",
+            "amount": "15",
+            "dv": ""
+          },
+          {
+            "name": "Total Carbohydrate",
+            "amount": "3 g",
+            "dv": "1%*"
+          },
+          {
+            "name": "Total Sugars",
+            "amount": "1 g",
+            "dv": "†",
+            "indent": true
+          }
+        ],
+        "blend": {
+          "name": "Beras Kencur blend",
+          "amount": "2.6 g",
+          "items": [
+            "Toasted rice flour",
+            "Aromatic ginger rhizome (Kaempferia galanga)",
+            "Coconut palm sugar",
+            "Pandan leaf"
+          ]
+        },
+        "footnotes": [
+          "*Percent Daily Values are based on a 2,000 calorie diet.",
+          "†Daily Value not established."
+        ]
+      }
+    },
+    {
+      "handle": "digest",
+      "title": "Digest",
+      "local": "Temulawak",
+      "benefit": "Javanese turmeric for an easier afternoon",
+      "color": "#D9822B",
+      "price": 34,
+      "price15": 19,
+      "tags": [
+        "goal:digest",
+        "time:afternoon",
+        "serve:hot",
+        "taste:earthy"
+      ],
+      "ingredients": [
+        "javanese-turmeric",
+        "turmeric"
+      ],
+      "ritual": "Stir one stick into 250 ml of hot water after lunch.\nA slice of fresh ginger makes it sharper.",
+      "description": "<p>Temulawak is turmeric's bolder cousin, grown on the slopes of West Java. Earthy, slightly bitter, and traditionally taken after a heavy meal.</p>",
+      "facts": {
+        "serving_size": "1 stick (3 g)",
+        "servings": 30,
+        "rows": [
+          {
+            "name": "Calories",
+            "amount": "10",
+            "dv": ""
+          },
+          {
+            "name": "Total Carbohydrate",
+            "amount": "2 g",
+            "dv": "1%*"
+          },
+          {
+            "name": "Total Sugars",
+            "amount": "1 g",
+            "dv": "†",
+            "indent": true
+          }
+        ],
+        "blend": {
+          "name": "Temulawak blend",
+          "amount": "2.6 g",
+          "items": [
+            "Javanese turmeric rhizome (Curcuma zanthorrhiza)",
+            "Turmeric rhizome",
+            "Coconut palm sugar"
+          ]
+        },
+        "footnotes": [
+          "*Percent Daily Values are based on a 2,000 calorie diet.",
+          "†Daily Value not established."
+        ]
+      }
+    },
+    {
+      "handle": "warmth",
+      "title": "Warmth",
+      "local": "Jahe Merah",
+      "benefit": "Red ginger and cinnamon for cold mornings",
+      "color": "#B5412E",
+      "price": 34,
+      "price15": 19,
+      "tags": [
+        "goal:warmth",
+        "goal:energy",
+        "time:morning",
+        "serve:hot",
+        "taste:spicy"
+      ],
+      "ingredients": [
+        "red-ginger",
+        "lemongrass"
+      ],
+      "ritual": "Stir one stick into 250 ml of hot water.\nAdd honey if you like it sweeter.",
+      "description": "<p>Red ginger is smaller and hotter than the common kind. We pair it with lemongrass and a little cinnamon for a drink that warms from the first sip.</p>",
+      "facts": {
+        "serving_size": "1 stick (3 g)",
+        "servings": 30,
+        "rows": [
+          {
+            "name": "Calories",
+            "amount": "10",
+            "dv": ""
+          },
+          {
+            "name": "Total Carbohydrate",
+            "amount": "2 g",
+            "dv": "1%*"
+          },
+          {
+            "name": "Total Sugars",
+            "amount": "1 g",
+            "dv": "†",
+            "indent": true
+          }
+        ],
+        "blend": {
+          "name": "Jahe Merah blend",
+          "amount": "2.6 g",
+          "items": [
+            "Red ginger rhizome (Zingiber officinale var. rubrum)",
+            "Lemongrass",
+            "Cinnamon bark",
+            "Coconut palm sugar"
+          ]
+        },
+        "footnotes": [
+          "*Percent Daily Values are based on a 2,000 calorie diet.",
+          "†Daily Value not established."
+        ]
+      }
+    },
+    {
+      "handle": "focus",
+      "title": "Focus",
+      "local": "Sereh Telang",
+      "benefit": "Lemongrass and butterfly pea for clear afternoons",
+      "color": "#3D4FA3",
+      "price": 36,
+      "price15": 20,
+      "tags": [
+        "goal:focus",
+        "time:afternoon",
+        "serve:cold",
+        "taste:floral",
+        "taste:bright"
+      ],
+      "ingredients": [
+        "butterfly-pea",
+        "lemongrass"
+      ],
+      "ritual": "Stir one stick into 250 ml of cold water. It turns deep blue.\nAdd lemon and watch it change to violet.",
+      "description": "<p>Butterfly pea flowers from Bali, dried in the sun, with fresh lemongrass. Bright, floral, caffeine-free, and it changes colour when you add citrus.</p>",
+      "facts": {
+        "serving_size": "1 stick (3 g)",
+        "servings": 30,
+        "rows": [
+          {
+            "name": "Calories",
+            "amount": "5",
+            "dv": ""
+          },
+          {
+            "name": "Total Carbohydrate",
+            "amount": "1 g",
+            "dv": "<1%*"
+          },
+          {
+            "name": "Total Sugars",
+            "amount": "<1 g",
+            "dv": "†",
+            "indent": true
+          }
+        ],
+        "blend": {
+          "name": "Sereh Telang blend",
+          "amount": "2.6 g",
+          "items": [
+            "Butterfly pea flower (Clitoria ternatea)",
+            "Lemongrass (Cymbopogon citratus)",
+            "Lime peel",
+            "Coconut palm sugar"
+          ]
+        },
+        "footnotes": [
+          "*Percent Daily Values are based on a 2,000 calorie diet.",
+          "†Daily Value not established."
+        ]
+      }
+    },
+    {
+      "handle": "energy",
+      "title": "Energy",
+      "local": "Pandan Kelor",
+      "benefit": "Moringa and pandan for a steady, caffeine-free lift",
+      "color": "#4A7A2E",
+      "price": 36,
+      "price15": 20,
+      "tags": [
+        "goal:energy",
+        "time:morning",
+        "serve:cold",
+        "taste:floral",
+        "taste:earthy"
+      ],
+      "ingredients": [
+        "moringa",
+        "pandan"
+      ],
+      "ritual": "Shake one stick with 250 ml of cold water or coconut water.\nGood before a walk or a workout.",
+      "description": "<p>Moringa leaves from Madura, dried at low heat to keep their colour, with pandan for a soft vanilla note. Grassy, green and gently sweet.</p>",
+      "facts": {
+        "serving_size": "1 stick (3 g)",
+        "servings": 30,
+        "rows": [
+          {
+            "name": "Calories",
+            "amount": "10",
+            "dv": ""
+          },
+          {
+            "name": "Total Carbohydrate",
+            "amount": "2 g",
+            "dv": "1%*"
+          },
+          {
+            "name": "Total Sugars",
+            "amount": "1 g",
+            "dv": "†",
+            "indent": true
+          }
+        ],
+        "blend": {
+          "name": "Pandan Kelor blend",
+          "amount": "2.6 g",
+          "items": [
+            "Moringa leaf (Moringa oleifera)",
+            "Pandan leaf (Pandanus amaryllifolius)",
+            "Coconut palm sugar"
+          ]
+        },
+        "footnotes": [
+          "*Percent Daily Values are based on a 2,000 calorie diet.",
+          "†Daily Value not established."
+        ]
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "handle": "turmeric",
+      "name": "Turmeric",
+      "local_name": "Kunyit",
+      "latin_name": "Curcuma longa",
+      "origin": "Central Java",
+      "harvest": "May to August",
+      "color": "#E8A21F",
+      "story": "Kunyit is the backbone of jamu. Our growers in Karanganyar lift the rhizomes after the plant's leaves yellow, wash them in spring water and slice them thin to dry in the sun for four days.\nFresh turmeric is used in almost every Javanese kitchen, from curries to the yellow rice cooked for celebrations."
+    },
+    {
+      "handle": "tamarind",
+      "name": "Tamarind",
+      "local_name": "Asam Jawa",
+      "latin_name": "Tamarindus indica",
+      "origin": "East Java",
+      "harvest": "January to March",
+      "color": "#8A5A35",
+      "story": "Tamarind trees line the old roads of East Java. The sticky pulp gives kunyit asam its sourness, balancing the earthiness of turmeric.\nWe buy from a women's cooperative in Pasuruan that hand-shells every pod."
+    },
+    {
+      "handle": "aromatic-ginger",
+      "name": "Aromatic ginger",
+      "local_name": "Kencur",
+      "latin_name": "Kaempferia galanga",
+      "origin": "Central Java",
+      "harvest": "Year round",
+      "color": "#C9B98E",
+      "story": "Kencur is a small, low-growing ginger with a camphor-bright smell. It's the defining flavour of beras kencur and a common remedy for a sore throat."
+    },
+    {
+      "handle": "rice",
+      "name": "Rice",
+      "local_name": "Beras",
+      "latin_name": "Oryza sativa",
+      "origin": "Tabanan, Bali",
+      "harvest": "March and September",
+      "color": "#E9DFC6",
+      "story": "We toast heirloom red and white rice from Jatiluwih's terraces until it smells like popcorn, then mill it fine. It gives beras kencur its body."
+    },
+    {
+      "handle": "javanese-turmeric",
+      "name": "Javanese turmeric",
+      "local_name": "Temulawak",
+      "latin_name": "Curcuma zanthorrhiza",
+      "origin": "West Java",
+      "harvest": "June to September",
+      "color": "#D9822B",
+      "story": "Temulawak grows wild on the forest edges around Bogor. Larger and more bitter than common turmeric, it has been taken after meals in Java for centuries."
+    },
+    {
+      "handle": "red-ginger",
+      "name": "Red ginger",
+      "local_name": "Jahe Merah",
+      "latin_name": "Zingiber officinale var. rubrum",
+      "origin": "Central Java",
+      "harvest": "August to October",
+      "color": "#B5412E",
+      "story": "Red ginger has smaller rhizomes with a pink skin and much more heat than the yellow kind. Farmers in Boyolali plant it between rows of chilli."
+    },
+    {
+      "handle": "lemongrass",
+      "name": "Lemongrass",
+      "local_name": "Sereh",
+      "latin_name": "Cymbopogon citratus",
+      "origin": "Bali",
+      "harvest": "Year round",
+      "color": "#A3B04F",
+      "story": "Grown in the same family gardens as the butterfly pea, lemongrass is cut every few weeks and dried in the shade so it keeps its oils."
+    },
+    {
+      "handle": "butterfly-pea",
+      "name": "Butterfly pea",
+      "local_name": "Bunga Telang",
+      "latin_name": "Clitoria ternatea",
+      "origin": "Gianyar, Bali",
+      "harvest": "Year round",
+      "color": "#3D4FA3",
+      "story": "The deep blue flowers climb fences across Bali. Picked each morning and dried in the sun, they colour rice cakes, teas and our Focus blend. Add citrus and the blue turns violet."
+    },
+    {
+      "handle": "moringa",
+      "name": "Moringa",
+      "local_name": "Kelor",
+      "latin_name": "Moringa oleifera",
+      "origin": "Madura",
+      "harvest": "Year round",
+      "color": "#5B8C3A",
+      "story": "Kelor grows fast in Madura's dry soil. Leaves are stripped by hand and dried below 40°C to keep their green colour."
+    },
+    {
+      "handle": "pandan",
+      "name": "Pandan",
+      "local_name": "Pandan Wangi",
+      "latin_name": "Pandanus amaryllifolius",
+      "origin": "Bali",
+      "harvest": "Year round",
+      "color": "#2F7A4A",
+      "story": "Pandan gives Indonesian sweets their soft, vanilla-like smell. A few leaves knotted into the rice pot is how most Balinese cooks use it."
+    }
+  ],
+  "accessory": {
+    "handle": "ritual-glass",
+    "title": "Ritual Glass",
+    "local": "Gelas",
+    "benefit": "Hand-blown in Yogyakarta, 300 ml",
+    "color": "#9DB8B0",
+    "price": 24,
+    "description": "<p>A thick, short tumbler made by a family glassworks in Yogyakarta from recycled bottles. Each one has small bubbles, and no two are the same.</p>",
+    "tags": [
+      "accessory"
+    ]
+  },
+  "tiers": [
+    {
+      "min": 3,
+      "percentage": 10
+    },
+    {
+      "min": 5,
+      "percentage": 15
+    }
+  ],
+  "subscription": {
+    "name": "Subscribe & save",
+    "plans": [
+      30,
+      60
+    ],
+    "percentage": 15
+  }
+}

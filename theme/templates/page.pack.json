@@ -1,0 +1,4 @@
+{
+  "sections": { "main": { "type": "main-pack", "settings": { "collection": "tonics", "max_items": 8 } } },
+  "order": ["main"]
+}

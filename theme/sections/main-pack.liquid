@@ -1,0 +1,115 @@
+{%- comment -%}
+  Build-your-own pack. Lines are added with a shared `_pack` property; the
+  pack-discount Shopify Function reads it and applies the tier discount at
+  checkout, so the price shown here is a preview of a rule enforced
+  server-side, not a client-side promise.
+{%- endcomment -%}
+{%- liquid
+  assign plans_source = nil
+  for p in section.settings.collection.products
+    if p.selling_plan_groups.size > 0 and plans_source == nil
+      assign plans_source = p
+    endif
+  endfor
+-%}
+{{ 'pack.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'pack.js' | asset_url }}" type="module"></script>
+
+<pack-builder class="pack container" data-max="{{ section.settings.max_items }}" data-tiers="{{ settings.pack_tiers | escape }}">
+  <div class="pack__intro">
+    <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    <h1 class="d-1">{{ section.settings.heading | escape }}</h1>
+    <p class="muted">{{ section.settings.text | escape }}</p>
+  </div>
+
+  <ul role="list" class="pack__grid">
+    {%- for p in section.settings.collection.products -%}
+      {%- assign v = p.selected_or_first_available_variant -%}
+      <li class="pcard" style="{% render 'tone', product: p %}" data-handle="{{ p.handle }}">
+        <div class="pcard__media">
+          {{ p.featured_media.preview_image | image_url: width: 600 | image_tag: widths: '240, 400, 600', sizes: '(min-width: 1000px) 18vw, 45vw', alt: '', loading: 'lazy' }}
+        </div>
+        <div class="pcard__body">
+          <span class="xsmall muted">{{ p.metafields.racik.local_name.value }}</span>
+          <a href="{{ p.url }}" class="pcard__title">{{ p.title | escape }}</a>
+          <span class="xsmall muted">{{ p.metafields.racik.benefit.value }}</span>
+          <div class="pcard__row">
+            <span class="small" style="font-weight:600">{{ v.price | money }}</span>
+            <div class="stepper" role="group" aria-label="{{ 'pack.quantity_for' | t: product: p.title | escape }}">
+              <button type="button" data-dec aria-label="{{ 'pack.remove_one' | t: product: p.title | escape }}" disabled>{% render 'icon', name: 'minus' %}</button>
+              <output data-count aria-live="polite">0</output>
+              <button type="button" data-inc aria-label="{{ 'pack.add_one' | t: product: p.title | escape }}" {% unless v.available %}disabled{% endunless %}>{% render 'icon', name: 'plus' %}</button>
+            </div>
+          </div>
+        </div>
+      </li>
+    {%- endfor -%}
+  </ul>
+
+  <aside class="tray" aria-label="{{ 'pack.your_pack' | t }}">
+    <div class="tray__head">
+      <p class="d-3">{{ 'pack.your_pack' | t }} <span class="muted" data-count-label>0</span></p>
+      <button type="button" class="tray__toggle" data-tray-toggle aria-expanded="false">{{ 'pack.options' | t }} {% render 'icon', name: 'plus' %}</button>
+      <p class="small" data-tier-msg></p>
+    </div>
+    <ol class="tray__slots" role="list" data-slots aria-hidden="true"></ol>
+
+    {%- if plans_source -%}
+      {%- assign group = plans_source.selling_plan_groups.first -%}
+      <div class="tray__purchase">
+        <label class="choice">
+          <input type="radio" name="pack-purchase" value="sub" checked>
+          <span class="choice__box"><span class="choice__dot"></span><span style="flex:1"><strong>{{ group.name }}</strong></span>
+            <select class="select tray__freq" data-plan aria-label="{{ 'products.deliver_every' | t }}">
+              {%- for plan in group.selling_plans -%}
+                <option value="{{ plan.id }}">{{ plan.options.first.value }}</option>
+              {%- endfor -%}
+            </select>
+          </span>
+        </label>
+        <label class="choice">
+          <input type="radio" name="pack-purchase" value="once">
+          <span class="choice__box"><span class="choice__dot"></span><strong>{{ 'products.one_time' | t }}</strong></span>
+        </label>
+      </div>
+    {%- endif -%}
+
+    <dl class="tray__totals">
+      <div><dt>{{ 'pack.subtotal' | t }}</dt><dd data-subtotal>—</dd></div>
+      <div data-discount-row hidden><dt data-discount-label></dt><dd data-discount>—</dd></div>
+      <div class="tray__total"><dt>{{ 'pack.total' | t }}</dt><dd data-total>—</dd></div>
+    </dl>
+    <button type="button" class="btn btn--block" data-add disabled>{{ 'pack.add' | t }}</button>
+    <p class="xsmall muted">{{ 'pack.note' | t }}</p>
+  </aside>
+
+  <script type="application/json" data-products>
+    {
+      {%- for p in section.settings.collection.products -%}
+        {%- assign v = p.selected_or_first_available_variant -%}
+        {{ p.handle | json }}: {
+          "variantId": {{ v.id }},
+          "title": {{ p.title | json }},
+          "price": {{ v.price }},
+          "available": {{ v.available | json }},
+          "tone": {{ p.metafields.racik.color.value | default: settings.color_leaf | json }},
+          "plans": { {%- for alloc in v.selling_plan_allocations -%}{{ alloc.selling_plan.id | append: '' | json }}: {{ alloc.price }}{% unless forloop.last %},{% endunless %}{%- endfor -%} }
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    }
+  </script>
+</pack-builder>
+
+{% schema %}
+{
+  "name": "Pack builder",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Build a pack" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Pick three or more. Bigger packs cost less." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Mix flavours or double up on a favourite. Each tonic is a 30-stick pouch." },
+    { "type": "collection", "id": "collection", "label": "Tonics" },
+    { "type": "range", "id": "max_items", "label": "Maximum pouches per pack", "min": 3, "max": 12, "step": 1, "default": 8 }
+  ]
+}
+{% endschema %}

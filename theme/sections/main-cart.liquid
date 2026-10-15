@@ -1,0 +1,31 @@
+<section class="container section--tight cartp">
+  <h1 class="d-1">{{ 'cart.title' | t }}</h1>
+  <cart-items data-cart-root="{{ section.id }}" data-count="{{ cart.item_count }}" class="cartp__grid">
+    {%- if cart.item_count > 0 -%}
+      <div>{% render 'shipping-bar' %}{% render 'cart-lines' %}</div>
+      <form action="{{ routes.cart_url }}" method="post" class="cartp__summary">
+        <div class="totals"><span>{{ 'cart.subtotal' | t }}</span><span>{{ cart.total_price | money_with_currency }}</span></div>
+        <p class="xsmall muted">{{ 'cart.taxes' | t }}</p>
+        {% render 'delivery-estimate' %}
+        <button type="submit" name="checkout" class="btn btn--block">{{ 'cart.checkout' | t }} {% render 'icon', name: 'arrow' %}</button>
+        {%- if additional_checkout_buttons -%}<div>{{ content_for_additional_checkout_buttons }}</div>{%- endif -%}
+      </form>
+    {%- else -%}
+      <div class="stack" style="--gap:16px;justify-items:start">
+        <p class="lead muted">{{ 'cart.empty_text' | t }}</p>
+        <a href="/pages/quiz" class="btn">{{ 'cart.take_quiz' | t }}</a>
+      </div>
+    {%- endif -%}
+  </cart-items>
+</section>
+
+<style>
+  .cartp { display: grid; gap: 24px; }
+  .cartp__grid { display: grid; gap: 24px; }
+  .cartp__summary { display: grid; gap: 14px; padding: 22px; border-radius: var(--r-lg); background: #fff; border: 1.5px solid var(--line); align-content: start; }
+  @media (min-width: 1000px) { .cartp__grid { grid-template-columns: 1fr 380px; align-items: start; } .cartp__summary { position: sticky; top: calc(var(--header-h) + 16px); } }
+</style>
+
+{% schema %}
+{ "name": "Cart", "tag": "section", "settings": [] }
+{% endschema %}

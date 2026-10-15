@@ -1,0 +1,87 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Racik",
+    "theme_version": "1.0.0",
+    "theme_author": "Yodhimas Geffananda",
+    "theme_documentation_url": "https://github.com/geffaa/racik-shopify",
+    "theme_support_url": "https://github.com/geffaa/racik-shopify"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "text", "id": "wordmark", "label": "Wordmark", "default": "racik" },
+      { "type": "image_picker", "id": "logo", "label": "Logo image" },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Each tonic brings its own colour through the racik.color metafield. These are the neutrals around them."
+      },
+      { "type": "color", "id": "color_paper", "label": "Paper", "default": "#FBFAF6" },
+      { "type": "color", "id": "color_ink", "label": "Ink", "default": "#17261C" },
+      { "type": "color", "id": "color_muted", "label": "Muted text", "default": "#4C5A50" },
+      { "type": "color", "id": "color_line", "label": "Lines", "default": "#E2DFD3" },
+      { "type": "color", "id": "color_leaf", "label": "Brand accent", "default": "#2E5B39" }
+    ]
+  },
+  {
+    "name": "Subscriptions & packs",
+    "settings": [
+      {
+        "type": "text",
+        "id": "pack_tiers",
+        "label": "Pack discount tiers",
+        "default": "3:10, 5:15",
+        "info": "minimum tonics:percent off. Display only: keep in sync with the pack-discount function configuration."
+      },
+      {
+        "type": "text",
+        "id": "subscribe_badge",
+        "label": "Subscription badge",
+        "default": "Save 15%"
+      }
+    ]
+  },
+  {
+    "name": "Shipping by market",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "free_shipping_thresholds",
+        "label": "Free shipping thresholds",
+        "default": "USD:50\nCAD:65\nEUR:50\nGBP:45\nAUD:80",
+        "info": "One per line, CURRENCY:amount in that currency. The bar hides for currencies not listed."
+      },
+      {
+        "type": "textarea",
+        "id": "delivery_estimates",
+        "label": "Delivery estimates",
+        "default": "US:3–5 business days\nCA:5–8 business days\nGB:4–7 business days\nAU:6–10 business days\nDE:5–8 business days\nFR:5–8 business days\nNL:5–8 business days",
+        "info": "One per line, COUNTRY_CODE:text."
+      },
+      {
+        "type": "text",
+        "id": "duties_note",
+        "label": "Duties note (outside US)",
+        "default": "Duties and import taxes are calculated and paid at checkout. No surprise fees on delivery."
+      }
+    ]
+  },
+  {
+    "name": "Privacy",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "consent_banner",
+        "label": "Show cookie consent banner",
+        "default": true,
+        "info": "Uses Shopify's Customer Privacy API. Shown only where Shopify says consent is required."
+      }
+    ]
+  }
+]

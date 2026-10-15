@@ -1,0 +1,9 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement": { "type": "announcement", "settings": {} },
+    "header": { "type": "header", "settings": { "menu": "main-menu", "quiz_link": "/pages/quiz" } }
+  },
+  "order": ["announcement", "header"]
+}

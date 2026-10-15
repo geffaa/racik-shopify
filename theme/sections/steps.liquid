@@ -1,0 +1,43 @@
+<section class="section container" aria-labelledby="steps-{{ section.id }}">
+  <div class="stack" style="--gap:10px;margin-bottom:clamp(24px,3vw,40px)">
+    <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    <h2 class="d-1" id="steps-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+  </div>
+  <ol role="list" class="steps">
+    {%- for block in section.blocks -%}
+      <li class="step" {{ block.shopify_attributes }}>
+        <span class="step__n" aria-hidden="true">{{ forloop.index }}</span>
+        <h3 class="d-3">{{ block.settings.title | escape }}</h3>
+        <p class="muted">{{ block.settings.text | escape }}</p>
+      </li>
+    {%- endfor -%}
+  </ol>
+</section>
+
+<style>
+  .steps { display: grid; gap: 16px; }
+  .step { display: grid; gap: 10px; padding: 28px; border-radius: var(--r-lg); background: #fff; border: 1.5px solid var(--line); align-content: start; }
+  .step__n { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--paper); font-weight: 700; font-size: 1.25rem; margin-bottom: 8px; }
+  .step:nth-child(2) .step__n { background: #F2B233; color: var(--ink); }
+  .step:nth-child(3) .step__n { background: #B5412E; }
+  @media (min-width: 900px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+</style>
+
+{% schema %}
+{
+  "name": "How it works",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "How the subscription works" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Set it once, change it whenever" }
+  ],
+  "blocks": [
+    { "type": "step", "name": "Step", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Pick your tonics" },
+      { "type": "textarea", "id": "text", "label": "Text", "default": "Take the quiz or build a pack of three or more. Bigger packs cost less per stick." }
+    ] }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "How it works", "blocks": [{ "type": "step" }, { "type": "step" }, { "type": "step" }] }]
+}
+{% endschema %}

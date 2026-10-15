@@ -1,0 +1,59 @@
+{%- comment -%}
+  Metaobject page for one ingredient (/pages/ingredient/<handle>), driven by
+  the `ingredient` definition: name, local_name, latin_name, origin, color,
+  harvest, story, found_in (product list).
+{%- endcomment -%}
+{%- assign ing = metaobject -%}
+<article class="ingp" style="--tone: {{ ing.color | default: settings.color_leaf }}">
+  <header class="container ingp__head">
+    <a href="{{ routes.root_url }}#ingredients" class="small link muted">{{ 'ingredients.back' | t }}</a>
+    <div class="ingp__hero">
+      {%- assign art = ing.illustration.value -%}
+      {%- if art -%}
+        <div class="ingp__art">{{ art | image_url: width: 700 | image_tag: widths: '280, 420, 560, 700', sizes: '(min-width: 900px) 280px, 60vw', alt: '', loading: 'eager' }}</div>
+      {%- else -%}
+        <div class="ingp__swatch" aria-hidden="true"><span></span></div>
+      {%- endif -%}
+      <div class="stack" style="--gap:14px">
+        <p class="eyebrow">{{ ing.local_name }}</p>
+        <h1 class="d-hero">{{ ing.name }}</h1>
+        <p class="lead muted"><i>{{ ing.latin_name }}</i></p>
+      </div>
+    </div>
+  </header>
+  <div class="container ingp__body">
+    <dl class="ingp__facts">
+      <div><dt class="small muted">{{ 'ingredients.origin' | t }}</dt><dd class="d-3">{{ ing.origin }}</dd></div>
+      <div><dt class="small muted">{{ 'ingredients.harvest' | t }}</dt><dd class="d-3">{{ ing.harvest }}</dd></div>
+    </dl>
+    <div class="rte ingp__story">{{ ing.story.value | newline_to_br }}</div>
+  </div>
+  {%- assign products = ing.found_in.value -%}
+  {%- if products.size > 0 -%}
+    <section class="container section--tight">
+      <h2 class="d-2" style="margin-bottom:20px">{{ 'ingredients.found_in' | t }}</h2>
+      <ul role="list" class="tiles">
+        {%- for product in products -%}<li>{% render 'product-tile', product: product %}</li>{%- endfor -%}
+      </ul>
+    </section>
+  {%- endif -%}
+</article>
+
+<style>
+  .ingp__head { display: grid; gap: 24px; padding-block: 24px clamp(24px, 4vw, 48px); }
+  .ingp__hero { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 900px) { .ingp__hero { grid-template-columns: 280px 1fr; } }
+  .ingp__swatch { width: min(280px, 60vw); aspect-ratio: 1; border-radius: 50%; background: var(--tone); display: grid; place-items: center; box-shadow: inset -24px -24px 0 rgba(0,0,0,.08); }
+  .ingp__art { width: min(280px, 60vw); animation: spin-art 900ms var(--spring) both; }
+  @keyframes spin-art { from { transform: rotate(-25deg) scale(0.7); opacity: 0; } }
+  .ingp__swatch span { width: 38%; height: 38%; border-radius: 50%; background: rgba(255,255,255,.35); transform: translate(-30%, -30%); }
+  .ingp__body { display: grid; gap: 32px; padding-bottom: clamp(32px, 5vw, 64px); }
+  @media (min-width: 900px) { .ingp__body { grid-template-columns: 280px 1fr; } }
+  .ingp__facts { display: grid; gap: 18px; align-content: start; margin: 0; }
+  .ingp__facts dd { margin: 4px 0 0; }
+  .ingp__story { max-width: 62ch; font-size: var(--t-lg); line-height: 1.5; }
+</style>
+
+{% schema %}
+{ "name": "Ingredient", "tag": "section", "settings": [] }
+{% endschema %}

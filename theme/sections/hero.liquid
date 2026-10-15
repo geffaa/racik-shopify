@@ -1,0 +1,78 @@
+{%- liquid
+  assign is_first = false
+  if section.index == 1
+    assign is_first = true
+  endif
+-%}
+<section class="hero container" style="--tone: {{ section.settings.tone }}; --on-tone: {{ section.settings.on_tone }}">
+  <div class="hero__copy">
+    <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {%- if is_first -%}
+      <h1 class="d-hero">{{ section.settings.heading | escape }}</h1>
+    {%- else -%}
+      <h2 class="d-hero">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    <p class="lead muted">{{ section.settings.text | escape }}</p>
+    <div class="hero__ctas">
+      {%- if section.settings.primary_label != blank -%}<a href="{{ section.settings.primary_link }}" class="btn">{{ section.settings.primary_label | escape }} {% render 'icon', name: 'arrow' %}</a>{%- endif -%}
+      {%- if section.settings.secondary_label != blank -%}<a href="{{ section.settings.secondary_link }}" class="btn btn--ghost">{{ section.settings.secondary_label | escape }}</a>{%- endif -%}
+    </div>
+    {%- if section.blocks.size > 0 -%}
+      <ul role="list" class="hero__proof small">
+        {%- for block in section.blocks -%}<li {{ block.shopify_attributes }}>{% render 'icon', name: 'check' %}{{ block.settings.text | escape }}</li>{%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+  <div class="hero__art tone">
+    {%- if section.settings.image -%}
+      {%- if is_first -%}
+        {{ section.settings.image | image_url: width: 1600 | image_tag: widths: '480, 720, 960, 1200, 1600', sizes: '(min-width: 1000px) 50vw, 100vw', alt: section.settings.image.alt, loading: 'eager', fetchpriority: 'high', preload: true }}
+      {%- else -%}
+        {{ section.settings.image | image_url: width: 1600 | image_tag: widths: '480, 720, 960, 1200, 1600', sizes: '(min-width: 1000px) 50vw, 100vw', alt: section.settings.image.alt, loading: 'lazy' }}
+      {%- endif -%}
+    {%- endif -%}
+    {%- if section.settings.sticker != blank -%}<span class="sticker hero__sticker">{{ section.settings.sticker | escape }}</span>{%- endif -%}
+  </div>
+</section>
+
+<style>
+  .hero { display: grid; gap: clamp(24px, 4vw, 56px); padding-block: clamp(20px, 3vw, 40px) clamp(40px, 6vw, 88px); align-items: center; }
+  .hero__copy { display: grid; gap: 22px; justify-items: start; }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+  .hero__proof { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--muted); }
+  .hero__proof li { display: inline-flex; gap: 6px; align-items: center; }
+  .hero__proof .icon { color: var(--leaf); }
+  .hero__art { position: relative; border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 1; }
+  .hero__art img { width: 100%; height: 100%; object-fit: cover; }
+  .hero__sticker { position: absolute; top: 22px; right: 22px; width: 104px; height: 104px; font-size: 14px; animation: spin-in 900ms var(--spring) both 200ms; }
+  @keyframes spin-in { from { transform: rotate(-60deg) scale(0.4); opacity: 0; } to { transform: rotate(-12deg) scale(1); opacity: 1; } }
+  @media (min-width: 1000px) {
+    .hero { grid-template-columns: 1.05fr 1fr; }
+    .hero__art { aspect-ratio: 4 / 4.4; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Indonesian botanicals, shipped from Bali" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Five centuries of jamu. One stick a day." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Turmeric, red ginger and butterfly pea, grown by small farms in Java and Bali. Stir into water, hot or cold, and you're done." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "color", "id": "tone", "label": "Art background", "default": "#F2B233" },
+    { "type": "color", "id": "on_tone", "label": "Art foreground", "default": "#17261C" },
+    { "type": "text", "id": "sticker", "label": "Sticker", "default": "Subscribe & save 15%" },
+    { "type": "text", "id": "primary_label", "label": "Primary button", "default": "Find your blend" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button", "default": "Build a pack" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link" }
+  ],
+  "blocks": [
+    { "type": "proof", "name": "Proof point", "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Third-party tested" }] }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}
