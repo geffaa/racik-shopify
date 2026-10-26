@@ -22,6 +22,13 @@ async function check(name, fn) {
 }
 
 const browser = await puppeteer.launch({ executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' });
+// WARMUP=1: the store is the in-browser demo (docs/store); install its Service Worker first.
+if (process.env.WARMUP) {
+  const warm = await browser.newPage();
+  await warm.goto(`${BASE}/`, { waitUntil: 'networkidle0' });
+  await warm.waitForFunction(() => navigator.serviceWorker?.controller && !document.title.startsWith('Opening'), { timeout: 30000 });
+  await warm.close();
+}
 const page = await browser.newPage();
 await page.setViewport({ width: 1440, height: 900 });
 const errors = [];

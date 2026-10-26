@@ -1,0 +1,62 @@
+/* RACIK — pack builder */
+.pack { display: grid; gap: clamp(20px, 3vw, 40px); padding-block: clamp(24px, 4vw, 56px) clamp(140px, 12vw, 120px); }
+.pack__intro { display: grid; gap: 12px; max-width: 720px; }
+@media (min-width: 1000px) {
+  .pack { grid-template-columns: minmax(0, 1fr) 380px; align-items: start; }
+  .pack__intro { grid-column: 1 / -1; }
+}
+.pack > * { min-width: 0; }
+.pack__grid { list-style: none; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 760px) { .pack__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.pcard { display: grid; grid-template-rows: auto 1fr; border-radius: var(--r-lg); background: var(--tone); color: var(--on-tone); overflow: hidden; position: relative; transition: transform 300ms var(--spring), box-shadow 300ms var(--ease); }
+.pcard[data-active] { box-shadow: 0 0 0 4px var(--paper), 0 0 0 7px var(--ink); }
+.pcard__media img { aspect-ratio: 1; width: 100%; object-fit: contain; padding: 6% 10% 0; }
+.pcard__body { display: grid; gap: 3px; padding: 4px 16px 16px; }
+.pcard__title { font-weight: 680; font-size: var(--t-md); letter-spacing: -0.015em; text-decoration: none; }
+.pcard__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; }
+.stepper { display: inline-grid; grid-template-columns: 36px 28px 36px; align-items: center; height: 40px; border-radius: var(--pill); background: rgba(255, 255, 255, 0.92); color: var(--ink); }
+.stepper button { height: 100%; display: grid; place-items: center; border-radius: var(--pill); }
+.stepper button:disabled { opacity: 0.3; cursor: not-allowed; }
+.stepper output { text-align: center; font-weight: 700; }
+.pcard[data-bump] .stepper output { animation: bump 380ms var(--spring); }
+@keyframes bump { 40% { transform: scale(1.5); } }
+
+.tray { display: grid; gap: 16px; padding: 22px; border-radius: var(--r-lg); background: #fff; border: 1.5px solid var(--line); }
+@media (min-width: 1000px) { .tray { position: sticky; top: calc(var(--header-h) + 16px); } }
+.tray__head { display: grid; gap: 4px; }
+.tray__slots { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.tray__slots li { width: 38px; height: 38px; border-radius: 50%; border: 2px dashed var(--line); transition: background 300ms var(--ease); }
+.tray__slots li[data-filled] { border: 0; background: var(--c); animation: pop 420ms var(--spring); box-shadow: inset -5px -5px 0 rgba(0, 0, 0, 0.1); }
+.tray__slots li[data-goal] { border-color: var(--leaf); }
+@keyframes pop { from { transform: scale(0.3); } }
+.tray__purchase { display: grid; gap: 8px; }
+.tray__purchase .choice__box { padding: 12px 14px; }
+.tray__freq { min-height: 38px; width: auto; font-size: var(--t-sm); padding-left: 12px; }
+.tray__totals { display: grid; gap: 6px; margin: 0; }
+.tray__totals > div { display: flex; justify-content: space-between; }
+.tray__totals dd { margin: 0; font-weight: 600; }
+.tray__totals [data-discount] { color: var(--leaf); }
+.tray__total { font-size: var(--t-lg); font-weight: 680; padding-top: 6px; border-top: 1px solid var(--line); }
+.tier-ok { color: var(--leaf); font-weight: 650; }
+
+.tray__toggle { display: none; }
+
+/* Mobile: the tray is a bottom sheet. Collapsed it shows the slots, the tier
+   message and the button; purchase options and totals open on demand. */
+@media (max-width: 999px) {
+  .tray {
+    position: fixed; left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); z-index: 30;
+    gap: 10px; padding: 14px 16px; max-height: calc(100dvh - 96px); overflow-y: auto;
+    box-shadow: 0 -10px 40px -16px rgba(var(--ink-rgb), 0.35);
+  }
+  .tray__head { grid-template-columns: 1fr auto; align-items: start; }
+  .tray__head [data-tier-msg] { grid-column: 1 / -1; }
+  .tray__toggle { display: inline-flex; align-items: center; gap: 4px; font-size: var(--t-sm); font-weight: 600; padding: 4px 0; }
+  .tray__toggle svg { transition: transform 300ms var(--spring); }
+  .tray[data-expanded] .tray__toggle svg { transform: rotate(45deg); }
+  .tray:not([data-expanded]) .tray__purchase,
+  .tray:not([data-expanded]) .tray__totals > div:not(.tray__total),
+  .tray:not([data-expanded]) > .xsmall { display: none; }
+  .tray__slots li { width: 30px; height: 30px; }
+}
