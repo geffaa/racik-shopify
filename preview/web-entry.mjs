@@ -13,7 +13,9 @@ import './server.mjs';
 const BASE = new URL('./', self.location.href).pathname.replace(/\/$/, ''); // e.g. /racik-shopify/store
 const STATIC = /^\/(assets|img)\//;
 const REBASE = /(["'(\s=,])\/(?!\/)(assets|img|products|collections|cart|search|recommendations|apps|pages|password|account|localization|contact|policies|checkout)\b/g;
-const rebase = (text) => text.replace(REBASE, `$1${BASE}/$2`);
+// Links to the bare root ("/", "/#x", "/?x") point at the store, not the domain.
+const ROOT = /(\s(?:href|action)=["'])\/(?=["'#?])/g;
+const rebase = (text) => text.replace(REBASE, `$1${BASE}/$2`).replace(ROOT, `$1${BASE}/`);
 
 // A small, fixed note on every page so nobody mistakes the demo for a live shop.
 const BADGE = `<div style="position:fixed;left:12px;bottom:12px;z-index:2147483647;background:#111;color:#fff;font:600 12px/1.3 system-ui,sans-serif;padding:8px 12px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.25)">Live theme demo · rendered in your browser · <a href="${BASE}/../" style="color:#ffd27a">about</a></div>`;
